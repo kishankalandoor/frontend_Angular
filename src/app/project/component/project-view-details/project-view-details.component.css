@@ -1,0 +1,129 @@
+.description{
+    text-align: justify;
+}
+
+a{
+    color: black;
+}
+
+.breadcrumb {
+  font-size: 20px;
+  padding-left: 0px;
+  margin-left: 3px;
+
+}
+.breadcrumb{
+  /* margin-left: -14px; */
+}
+ol li {
+    line-height:2.5;
+}
+
+.image-box{
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 1px;
+    width: 80px;
+    float: right;
+}
+
+.border-line{
+    border-right: 1px solid #d0d2d2eb;
+}
+
+
+@media (max-width: 576px) {
+    .border-line{
+        border-right: 0px solid #d0d2d2eb !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .border-line{
+        border-bottom: 0px solid #d0d2d2eb !important;
+    }
+}
+
+
+@media (max-width: 360px) {
+    .border-line{
+        border-right: 0px solid #d0d2d2eb !important;
+    }
+}
+
+.documenturl{
+    background-color: #19d895;
+    padding: 3px;
+    border-radius: 3px;
+    color: white;
+    margin-right: 5px;
+}
+
+.timeline{
+    color: #3BD4AE;
+}
+
+.Budget{
+    color: #FF4D00;
+}
+
+
+
+.Posted{
+    color: #3BD4AE;
+}
+
+.currency{
+    color: #FF4D00;
+}
+
+.line{
+    padding-bottom: 10px;
+}
+
+.light{
+    color: #9a9a9a;
+}
+
+.fa-calendar-alt{
+    color: rgb(6, 119, 248);
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 1rem;
+    color: #d3d3d3;
+}
+
+.full {
+    color: #fc7d06;
+}
+
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: #fc7d06;
+}
+
+.starrating{
+    margin-left: -20px;
+}
+.chip {
+  border-radius: 5px;
+  border: solid 1px #ff4d00;
+  background-color: #ff4d00;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px;
+  min-height: auto;
+}
+.skills {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.proposal-click{
+    cursor: pointer;
+}

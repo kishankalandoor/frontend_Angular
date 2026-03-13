@@ -1,0 +1,63 @@
+<div class="container-scroller">
+    <nav class="navbar default-layout p-0 fixed-top flex-row col-lg-12 col-12  d-flex">
+
+      <div class="navbar-menu-wrapper d-flex align-items-center" style="width: calc(100% - 0px);">
+        <a [routerLink]="['/main/dashboard/landing-dashboard']"><img class="" style="height:60px" src="assets/images/Brandmark/Version 1/Pangaeax_V1_RGB.jpg"></a>
+
+        <ul class="navbar-nav ml-auto">
+          <p class="mt-3 font-weight-semibold">{{loginUserDetails?.user.firstName}}</p>
+          <li class="nav-item dropdown  d-xl-inline-block user-dropdown ml-2">
+
+            <a class="nav-link" id="UserDropdown" data-toggle="dropdown" aria-expanded="false">
+
+                <img class="img-xs rounded-circle" *ngIf="loginUserDetails?.profilePic !== undefined && loginUserDetails?.profilePic !== '' && loginUserDetails?.profilePic !== null" src="{{ loginUserDetails?.profilePic }}" alt="Profile image">
+                <img class="img-xs rounded-circle" *ngIf="loginUserDetails?.profilePic === undefined || loginUserDetails?.profilePic === '' || loginUserDetails?.profilePic === null" src="assets/images/default_image.jpg" alt="Profile image">
+                <i class="fa fa-angle-down" style="font-size:15px"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+              <div class="dropdown-header text-center">
+                <img class="img-md rounded-circle" *ngIf="loginUserDetails?.profilePic !== undefined && loginUserDetails?.profilePic !== '' && loginUserDetails?.profilePic !== null" src="{{loginUserDetails?.profilePic}}" alt="Profile image">
+                <img class="img-xs rounded-circle" *ngIf="loginUserDetails?.profilePic === undefined || loginUserDetails?.profilePic === '' || loginUserDetails?.profilePic === null" src="assets/images/default_image.jpg" alt="Profile image">
+                <p class="mb-1 mt-3 font-weight-semibold">{{loginUserDetails?.user.firstName}}</p>
+              </div>
+              <a class="dropdown-item" routerLink='/auth/reset-password' ><i class="fa fa-key"></i>Change Password</a>
+              <a class="dropdown-item" (click)="logout()"><i class="fa fa-power-off"></i>Sign Out</a>
+            </div>
+          </li>
+
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center"  (click)="toggleChange()" type="button" data-toggle="offcanvas">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+      <div class="container-fluid page-body-wrapper d-flex">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+          <ul class="nav">
+            <li class="nav-item nav-border-bottom"  *ngFor="let menu of menus">
+              <a class="nav-link main-menu temp" *ngIf="menu.flag === 0" routerLink="{{menu.routerLink}}" data-toggle="collapse" href="#{{menu.menuName}}" [attr.aria-expanded]=menu.ariaExpanded aria-controls="auth" [ngClass]="{'active':menu.active,'collapsed':!menu.ariaExpanded}">
+                 <span class="menu-title"><i class="{{menu.iconName}}"></i>{{menu.menuName}}</span>
+              </a>
+              <a class="nav-link main-menu" *ngIf="menu.flag === 1" data-toggle="collapse" href="#{{menu.menuName}}" [attr.aria-expanded]=menu.ariaExpanded aria-controls="auth" [ngClass]="{'active':menu.active,'collapsed':!menu.ariaExpanded}">
+                <span class="menu-title"><i class="{{menu.iconName}}"></i>{{menu.menuName}}</span><i class="fa menu-arrow mt-1"></i>
+              </a>
+                <div *ngIf="menu.flag === 1" class="collapse" id="{{menu.menuName}}" [ngClass]="{'show':menu.ariaExpanded}">
+                  <ul class="nav flex-column">
+                    <li class="nav-item nav-border-bottom pl-4" *ngFor="let submenu of menu.submenu">
+                      <a class="nav-link" routerLink="{{submenu.routerLink}}" [ngClass]="{'active':submenu.active}">
+                        <span class="menu-title"><i class="{{submenu.iconName}}"></i>{{submenu.menuName}}</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+            </li>
+          </ul>
+        </nav>
+        <div class="main-panel">
+            <div class="content-wrapper" style="background-color: #edf1f7;">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+ </div>

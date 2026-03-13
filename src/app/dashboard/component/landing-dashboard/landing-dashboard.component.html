@@ -1,0 +1,264 @@
+<div class="loading">
+    <div class="row">
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card cursor-pointer">
+                <div class="card-body ctl-card-body" (click)="userFilter('All')">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="far fa-user"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfUsers}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Users</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-40"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card cursor-pointer">
+                <div class="card-body ctl-card-body" (click)="userFilter('Client')">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="far fa-building"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfClients}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Clients</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-10"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card cursor-pointer">
+                <div class="card-body ctl-card-body" (click)="userFilter('Freelancer')">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="far fa-user"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfFreelancers}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Freelancers</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-25"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+          <div class="card ctl-card cursor-pointer">
+              <div class="card-body ctl-card-body" (click)="userFilter('Company')">
+                  <div class="dash-widget-header">
+                      <span class="dash-widget-icon text-1 border-1">
+                          <i class="far fa-user"></i>
+                      </span>
+                      <div class="dash-count">
+                          <h4>{{dashboard?.totalNumberOfAgency}}</h4>
+                      </div>
+                  </div>
+                  <div class="dash-widget-info">
+                      <h6 class="text-muted">Companies</h6>
+                      <!-- <div class="progress progress-sm">
+                          <div class="progress-bar bg-grn w-40"></div>
+                      </div> -->
+                  </div>
+              </div>
+          </div>
+      </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card cursor-pointer">
+                <div class="card-body ctl-card-body" (click)="projectStatusFilter('All')">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="fas fa-tasks"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfProjects}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Total Projects</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-25"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card cursor-pointer">
+                <div class="card-body ctl-card-body" (click)="projectStatusFilter('Active')">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="far fa-sticky-note"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfActiveProjects}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Active Projects</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-10"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card cursor-pointer">
+                <div class="card-body ctl-card-body" (click)="projectStatusFilter('Complete')">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="far fa-check-square"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfCompletedProjects}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Completed projects</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-10"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card cursor-pointer">
+                <div class="card-body ctl-card-body" (click)="projectStatusFilter('BiddingActive')">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="fas fa-spinner"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfBiddingActiveProjects}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Projects Under Bidding</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-25"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card">
+                <div class="card-body ctl-card-body">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="far fa-money-bill-alt"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalSumOfProjectAmount | number}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h5 class="text-muted">Projects Amount</h5>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-50"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card">
+                <div class="card-body ctl-card-body">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="far fa-money-bill-alt"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalSumOfPaymentGateway | number}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Payments Gateway Amount</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-0"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card">
+                <div class="card-body ctl-card-body">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfMessages | number}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Messages</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-0"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card ctl-card">
+                <div class="card-body ctl-card-body">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon text-1 border-1">
+                            <i class="fas fa-file-contract"></i>
+                        </span>
+                        <div class="dash-count">
+                            <h4>{{dashboard?.totalNumberOfBids | number}}</h4>
+                        </div>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6 class="text-muted">Bids</h6>
+                        <!-- <div class="progress progress-sm">
+                            <div class="progress-bar bg-grn w-0"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+
+
+    </div>
+
+    <ngx-loading [show]="loading"
+        [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}">
+    </ngx-loading>
+</div>

@@ -1,0 +1,40 @@
+
+    <div class="container-login">
+      <div class="wrap-login">
+        <div class="login-form-title">
+          <span class="login-form-title-1">Sign In</span>
+        </div>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+
+            <div>
+              <div class="wrap-input">
+                <span class="btn-icon-menu "> <i class="fa fa-envelope ml-1"></i> </span>
+                <input class="input" type="text"  formControlName="username" placeholder="Email Address">
+              </div>
+              <div *ngIf="config.isSubmitted && formControls.username.errors">
+                <span class="error-message" *ngIf="formControls.username.errors.required">Email Address is a required field.</span>
+              </div>
+
+              <div class="wrap-input">
+                <span class="btn-icon-menu "> <i class="fa fa-lock ml-1"></i> </span>
+                <span class="btn-show-pass" (click)="showHidePassword()">
+                  <i [hidden]="!config.showPassword" class="fa fa-eye ml-1"></i>
+                  <i [hidden]="config.showPassword" class="fa fa-eye-slash ml-1"></i>
+                </span>
+                <input class="input" [type]="config.showPassword ? 'text' : 'password'"  formControlName="password" placeholder="Password">
+              </div>
+              <div *ngIf="config.isSubmitted && formControls.password.errors">
+                <span class="error-message" *ngIf="formControls.password.errors.required">Password is a required field.</span>
+              </div>
+
+              <div class="p-b-30">
+                  <a routerLink="/auth/request-password" class="forgot-password">Forgot Password?</a>
+              </div>
+
+              <div>
+                <button class="login-form-btn text-light">Login</button>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>

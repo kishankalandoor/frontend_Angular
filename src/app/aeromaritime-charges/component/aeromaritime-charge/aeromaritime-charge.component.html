@@ -1,0 +1,120 @@
+
+<div class="col-lg-12 pl-0 pr-0">
+    <div class="card">
+      <div class="card-body">
+            <div class="row">
+                <div class="col-10 col-md-10">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Pangaea X Charges</li>
+                            <li class="breadcrumb-item" aria-current="page" >{{config.name}}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-2 col-md-2 d-flex justify-content-end align-items-end flex-column">
+                  <button type="button" (click)="refreshPage()" class="btn btn-icons btn-rounded btn-outline-secondary mr-1" tooltip="Refresh" placement="top"><i class="fas fa-sync-alt" aria-hidden="true"></i></button>
+                  <p class="mb-0">Refresh</p>
+                </div>
+            </div>
+            <hr>
+
+            <div class="template-demo d-flex justify-content-end">
+                <button type="button" class="btn btn-icons btn-rounded btn-outline-success position-absolute" tooltip="Update {{config.name}} charges"  placement="top" (click)="create()"><i class="fas fa-edit" style="font-size: 18px;"></i></button>
+            </div>
+            <h5 class="titles">Active Charges :</h5>
+            <div class="ml-3">
+              <div class="d-flex row" *ngIf='config.name != "Client"'>
+                <label class="col-sm-2">Percentage</label>
+                <p>: {{activeCharges?.percentage}}%</p>
+              </div>
+              <div class="d-flex row" *ngIf='config.name == "Client"'>
+                <label class="col-sm-2">Amount</label>
+                <p> : {{activeCharges?.percentage | currency : 'USD'}}</p>
+              </div>
+              <div class="d-flex row">
+                <label class="col-sm-2">Created By</label>
+                <p>: {{activeCharges?.createdBy}}</p>
+              </div>
+              <div class="d-flex row">
+                <label class="col-sm-2">Updated By</label>
+                <p>: {{activeCharges?.updatedBy}}</p>
+              </div>
+              <div class="d-flex row">
+                <label class="col-sm-2">Created At</label>
+                <p>: {{activeCharges?.createdAt | date : 'medium'}}</p>
+              </div>
+              <div class="d-flex row">
+                <label class="col-sm-2">Updated At</label>
+                <p>: {{activeCharges?.updatedAt | date : 'medium' }}</p>
+              </div>
+              <div class="d-flex">
+                <label></label>
+                <p></p>
+              </div>
+            </div>
+            <!-- <div class="loading">
+            <h5 class="titles">History :</h5> -->
+            <!-- <div style="overflow-x:auto;">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th *ngIf='config.name != "Client"'><i class="fas fa-percentage pr-3"></i>Percentage</th>
+                    <th *ngIf='config.name == "Client"'>Amount</th>
+                    <th><i class="fa fa-cog pr-3"></i>Created By</th>
+                    <th><i class="fa fa-cog pr-3"></i>Updated By</th>
+                    <th><i class="fa fa-cog pr-3"></i>Created At</th>
+                    <th><i class="fa fa-cog pr-3"></i>Updated At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let charges of page.content; let i = index" >
+                    <td *ngIf='config.name != "Client"'>{{charges.percentage}}%</td>
+                    <td *ngIf='config.name == "Client"'>{{charges.percentage | currency : 'USD'}}</td>
+                    <td>{{charges.createdBy}}</td>
+                    <td>{{charges.updatedBy}}</td>
+                    <td>{{charges.createdAt | date : 'medium'}}</td>
+                    <td>{{charges.updatedAt | date : 'medium'}}</td>
+                  </tr>
+                  <tr *ngIf="page.content?.length === 0">
+                    <td>-</td><td>No Records</td>
+                  </tr>
+                </tbody>
+              </table>
+              <ngx-loading [show]="loading"
+              [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}"
+              ></ngx-loading>
+            </div> -->
+            <!-- <hr> -->
+            <!-- <app-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()" (pageSizeEvent)="getPageInNewSize($event)"></app-pagination> -->
+        <!-- </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Update {{config.name}} Charges</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size: 36px;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <input type="number" min="1" max="6" class="form-control" *ngIf='config.name == "Client"' [(ngModel)]="amount"  placeholder="Enter the {{config.name}} Amount ">
+          <input type="number" min="1" max="100" class="form-control" *ngIf='config.name != "Client"' [(ngModel)]="percentage"  placeholder="Enter the {{config.name}} Percentage ">
+          <div  *ngIf="error">
+            <span class="error-message">{{config.name}} is a required field</span>
+          </div>
+      </div>
+      <label class="text-left px-4" *ngIf='config.name == "Client"'>your current Charges is : {{activeCharges?.percentage | currency : "USD"}}</label>
+      <label class="text-left px-4" *ngIf='config.name != "Client"'>your current percentage is : {{activeCharges?.percentage}}%</label>
+      <div class="modal-footer" style="padding:0;">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success"  *ngIf='config.name == "Client"' (click)="saveValue(amount)">Save</button>
+        <button type="button" class="btn btn-success"  *ngIf='config.name != "Client"' (click)="saveValue(percentage)">Save</button>
+        <!-- <button type="button" class="btn btn-success"   *ngIf="config.createorUpdateFlag === 1" (click)="updateValue(config.object,percentage)">Update</button> -->
+      </div>
+    </div>
+  </div>
+</div>

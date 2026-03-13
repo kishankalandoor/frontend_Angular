@@ -1,0 +1,90 @@
+<div class="col-lg-12 pr-0 pl-0">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-10 col-md-10">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">Rating and Review</li>
+                <li class="breadcrumb-item" aria-current="page">UserList</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-2 col-md-2 d-flex justify-content-end align-items-end flex-column">
+            <button type="button" (click)="refreshPage()" class="btn btn-icons btn-rounded btn-outline-secondary mr-1" tooltip="Refresh" placement="top"><i class="fas fa-sync-alt" aria-hidden="true"></i></button>
+            <p class="mb-0">Refresh</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="form-group col-md-4 d-flex">
+            <i class="fa fa-search my-auto" aria-hidden="true"></i>
+              <input *ngIf="!isAgency" type="text" class="form-control" [(ngModel)]= 'inputText' (ngModelChange)="this.filterUpdate.next($event)" placeholder="Search User Name">
+              <input *ngIf="isAgency" type="text" class="form-control" [(ngModel)]= 'inputText' (ngModelChange)="this.filterUpdate.next($event)" placeholder="Search Company Name">
+          </div>
+          <div class="col-md-4">
+            <div *ngIf="!isAgency" class="form-group row" >
+              <div class="col-sm-9">
+                <select class="form-control" (change)="getChangeUser($event.target.value)" appBrowserCompatablity>
+                  <option>All</option>
+                  <option>Freelancer</option>
+                  <option>Client</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-left: auto;" *ngIf="isFreelancer" class="my-auto mr-3">
+            <button *ngIf="!isAgency" (click)="getAgency('COMPANY')" class="btn border-rounded user-switch">Switch to Company</button>
+            <button *ngIf="isAgency"  (click)="getAgency()" class="btn border-rounded user-switch">Switch to Freelancer</button>
+          </div>
+      </div>
+      <div class="loading">
+        <div style="overflow-x:auto;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th><i class="far fa-user pr-3"></i>Name</th>
+                <th><i class="fa fa-at pr-3"></i>Email ID</th>
+                <th><i class="fa fa-mobile-alt pr-3"></i>Phone</th>
+                <th><i class="far fa-user pr-3"></i>User Role</th>
+                <th><i class="fa fa-cog pr-3"></i>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let userList of page.content">
+                <td *ngIf="!userList?.freelancerDetails?.agency">{{ userList.userEntity.firstName }}</td>
+                <td *ngIf="userList?.freelancerDetails?.agency">{{ userList.freelancerDetails?.agencyName }}</td>
+                <td>{{ userList.userEntity.email }}</td>
+                <td *ngIf="userList.userEntity.phone != null && userList.userEntity.phone != '' && userList.userEntity.phone != undefined">{{ userList.userEntity.phone }} </td>
+                <td *ngIf="userList.userEntity.phone === null || userList.userEntity.phone === '' || userList.userEntity.phone === undefined">-</td>
+                <td *ngIf="userList.roleName != null && userList.roleName != '' && userList.roleName != undefined">{{ userList.roleName }}</td>
+                <td *ngIf="userList.roleName=== null || userList.roleName=== '' || userList.roleName === undefined">-</td>
+                <td *ngIf="userList.roleName; else noRole">
+                    <button *ngIf="userList.roleName != 'COMPANY'" (click)="checkRating(userList.userEntity.id, userList.roleName)" type="button" class="btn btn-rounded btn-inverse-outline-success example" tooltip="View User Review" placement="top" ><i class="fa fa-eye" aria-hidden="true"></i></button>
+                    <button *ngIf="userList.roleName === 'COMPANY'" (click)="checkRating(userList.userEntity.id, 'Freelancer')" type="button" class="btn btn-rounded btn-inverse-outline-success example" tooltip="View User Review" placement="top" ><i class="fa fa-eye" aria-hidden="true"></i></button>
+
+                </td>
+               <ng-template #noRole>
+                <td>
+                  <button  type="button" class="btn btn-rounded btn-inverse-outline-success" (click)="onNoRole()" tooltip="View User Review" placement="top" ><i class="fa fa-eye" aria-hidden="true"></i></button>
+              </td>
+
+               </ng-template>
+              </tr>
+              <tr *ngIf="page.content?.length === 0">
+                <td>-</td><td>-</td><td>No Records</td><td>-</td><td>-</td>
+              </tr>
+            </tbody>
+          </table>
+          <ngx-loading [show]="loading"
+            [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}"
+            ></ngx-loading>
+        </div>
+        <hr>
+        <app-pagination *ngIf="isRatings" [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+          (pageSizeEvent)="getPageInNewSize($event)"></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>

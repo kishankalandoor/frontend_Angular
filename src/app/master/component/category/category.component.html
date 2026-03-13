@@ -1,0 +1,137 @@
+
+<div class="col-lg-12 pl-0 pr-0">
+    <div class="card">
+      <div class="card-body">
+            <div class="row">
+                <div class="col-10 col-md-10">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Master</li>
+                            <li class="breadcrumb-item" aria-current="page" >{{config.name}}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-2 col-md-2 d-flex justify-content-end align-items-end flex-column">
+                  <button type="button" (click)="refreshPage()" class="btn btn-icons btn-rounded btn-outline-secondary mr-1" tooltip="Refresh" placement="top"><i class="fas fa-sync-alt" aria-hidden="true"></i></button>
+                  <p class="mb-0">Refresh</p>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+              <div class="form-group col-md-4 d-flex">
+                <i class="fa fa-search my-auto" aria-hidden="true"></i>
+                <!-- <input type="text" class="form-control" (keyup)="applyFilter($event.target.value)" placeholder="Search {{ config.name }}"> -->
+                <input type="text" class="form-control" [(ngModel)]= 'inputText' (ngModelChange)="this.filterUpdate.next($event)" placeholder="Search {{ config.name }}">
+              </div>
+              <div class="col-md-4">
+                <div class="form-group row" >
+                  <div class="col-sm-9">
+                    <select class="form-control" (change)="getFilter($event.target.value)" appBrowserCompatablity>
+                      <option >All</option>
+                      <option value="active">Active</option>
+                      <option value="inActive">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                 <div class="template-demo d-flex justify-content-end">
+                  <button type="button" class="btn btn-icons btn-rounded btn-outline-success" tooltip="Create {{config.name}}"  placement="top" (click)="create()"><i class="fas fa-plus"></i></button>
+                 </div>
+             </div>
+            </div>
+
+            <div class="loading">
+            <div style="overflow-x:auto;">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th><i class="far fa-user pr-3"></i>Name</th>
+                    <th><i class="fa fa-cog pr-3"></i>Action</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="config.flag === 0">
+                  <tr *ngFor="let category of page.content; let i = index" >
+                    <td>{{category.categoryName}}</td>
+                    <td>
+                      <div *ngIf="category.active === true" class="row">
+                        <div  class="custom-control custom-switch" tooltip="Active"  placement="top">
+                          <input type="checkbox" class="custom-control-input" id="active{{i}}" (change)="onChange(category,$event.target.checked)" [checked]="category.active === true">
+                          <label class="custom-control-label" for="active{{i}}"></label>
+                        </div>
+                        <button class="btn btn-sm btn-rounded btn-outline-success" type="button" tooltip="Edit" (click)="edit(category)" placement="top" ><i class="fa fa-edit pl-2"></i></button>
+                      </div>
+                      <div *ngIf="category.active === false" class="row">
+                        <div  class="custom-control custom-switch" tooltip="Inactive"  placement="top">
+                          <input type="checkbox" class="custom-control-input" id="active{{i}}" (change)="onChange(category,$event.target.checked)" [checked]="category.active === true">
+                          <label class="custom-control-label" for="active{{i}}"></label>
+                        </div>
+                        <button class="btn btn-sm btn-rounded btn-outline-success" type="button" tooltip="Edit" (click)="edit(category)" placement="top" ><i class="fa fa-edit pl-2"></i></button>
+                      </div>
+                   </td>
+                  </tr>
+                  <tr *ngIf="page.content?.length === 0">
+                    <td>-</td><td>No Records</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="config.flag === 1">
+                  <tr *ngFor="let tag of page.content; let i = index" >
+                    <td>{{tag.name}}</td>
+                    <td>
+                      <div *ngIf="tag.active === true" class="row">
+                        <div  class="custom-control custom-switch" tooltip="Active"  placement="top">
+                          <input type="checkbox" class="custom-control-input" id="active{{i}}" (change)="onChange(tag,$event.target.checked)" [checked]="tag.active === true">
+                          <label class="custom-control-label" for="active{{i}}"></label>
+                        </div>
+                        <button class="btn btn-sm btn-rounded btn-outline-success" type="button" (click)="edit(tag)" tooltip="Edit"  placement="top" ><i class="fa fa-edit pl-2"></i></button>
+                      </div>
+                      <div *ngIf="tag.active === false" class="row">
+                        <div  class="custom-control custom-switch" tooltip="Inactive"  placement="top">
+                          <input type="checkbox" class="custom-control-input" id="active{{i}}" (change)="onChange(tag,$event.target.checked)" [checked]="tag.active === true">
+                          <label class="custom-control-label" for="active{{i}}"></label>
+                        </div>
+                        <button class="btn btn-sm btn-rounded btn-outline-success" type="button" (click)="edit(tag)" tooltip="Edit"  placement="top" ><i class="fa fa-edit pl-2"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="page.content?.length === 0">
+                    <td>-</td><td>No Records</td>
+                  </tr>
+                </tbody>
+              </table>
+              <ngx-loading [show]="loading"
+                [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}"
+                ></ngx-loading>
+            </div>
+            <hr>
+            <app-pagination  *ngIf="page.content?.length > 0"  [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()" (pageSizeEvent)="getPageInNewSize($event)"></app-pagination>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="height: 300px; width: 700px;">
+      <div class="modal-header">
+        <h5 *ngIf="config.createorUpdateFlag === 0" class="modal-title">Create {{config.name}}</h5>
+        <h5 *ngIf="config.createorUpdateFlag === 1" class="modal-title"> {{config.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <input type="text" class="form-control" [(ngModel)]="categoryName"  placeholder="Enter the {{config.name}}">
+          <div  *ngIf="error">
+            <span class="error-message">{{config.name}} is a required field</span>
+          </div>
+      </div>
+      <div class="modal-footer" style="padding:0;">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success"  *ngIf="config.createorUpdateFlag === 0" (click)="saveValue(categoryName)">Save</button>
+        <button type="button" class="btn btn-success"   *ngIf="config.createorUpdateFlag === 1" (click)="updateValue(config.object,categoryName)">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

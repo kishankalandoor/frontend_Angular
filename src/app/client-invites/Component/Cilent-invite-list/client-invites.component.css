@@ -1,0 +1,113 @@
+.table td{
+    white-space:normal;
+    line-height: 2;
+}
+.example-form-field {
+  margin-right: 20px;
+}
+
+.close{
+  color: #FF4D00 ;
+}
+
+.modal{
+  padding-top:10%;
+  }
+
+  .modal-body{
+  padding: 10%;
+  }
+
+
+.form-control{
+border-bottom: 2px solid #FF4D00 !important;
+font-size: 13px;
+border: none;
+}
+
+.modal-btn{
+padding:2%;
+}
+
+.error-message {
+  color: #cc0033;
+  display:inline-block;
+  font-size: 13px;
+  line-height: 15px;
+  margin: 0px 0 0;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before{
+  color: #fff;
+  border-color: #FF4D00;
+  background-color: #FF4D00;
+}
+
+.loading {
+  z-index: 0;
+  position: relative;
+  border-radius: 4px;
+}
+.breadcrumb {
+  font-size: 20px;
+  padding-left: 0px;
+
+}
+.user-switch {
+  background-color: #FF4D00;
+  padding: 7px;
+  color: #fff;
+}
+
+::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  /* color: black !important; */
+  /* text-align: center; */
+    font-size: 16px !important;
+    /* padding-top: 50px !important;  */
+    color: #808080 !important;
+    margin-bottom: 100px;
+    padding: 0px;
+    font-family: 'Roboto', sans-serif;
+
+ }
+
+ /* ::ng-deep .mat-form-field-underline{
+  background-color: black;
+  } */
+
+ /* ::ng-deep.mat-form-field-ripple {
+  background-color: black !important;
+ } */
+
+ .date-mat-form-field{
+  border-bottom: 2px solid #FF4D00 !important;
+  font-size: 13px;
+ }
+
+ ::ng-deep .mat-form-field-wrapper{
+  margin: 0 !important;
+  padding: 0;
+}
+
+ ::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+ ::ng-deep .mat-form-field-ripple {
+  display: none;
+}
+
+
+ mat-datepicker-toggle {
+  color: #808080 !important;
+ }
+
+ ::ng-deep .mat-date-range-input-separator {
+  color: black;
+}
+
+
+
+
+

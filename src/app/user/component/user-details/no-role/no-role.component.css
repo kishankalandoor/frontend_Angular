@@ -1,0 +1,137 @@
+
+
+.image-box{
+  border: 1px solid #ddd;
+  width: 140px;
+  height: 130px;
+}
+
+.description{
+  text-align: justify;
+}
+
+.border-line{
+  border-right: 1px dotted;
+}
+
+.text-align-center{
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .border-line{
+    border-right: 0px dotted;
+    border-bottom: 1px dotted;
+  }
+}
+.module-icons {
+  width: 25px !important;
+  text-align: center !important;
+}
+
+@media (max-width: 480px) {
+  .border-line{
+    border-right: 0px dotted;
+    border-bottom: 1px dotted;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .border-line{
+    border-right: 0px dotted;
+    border-bottom: 1px dotted;
+  }
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  color: #d3d3d3;
+}
+
+.full {
+  color: #efe56a;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #efe56a;
+}
+
+.skill-category{
+  border: 1px solid #FF4D00;
+  color: #FF4D00;
+  padding: 5px 5px;
+  margin: 3px 3px;
+  border-radius:3px;
+}
+
+
+.wrap-input-bank {
+  position: relative;
+  border-bottom: 1px solid #adadad;
+  margin-bottom: 37px;
+}
+
+.input-bank {
+  font-size: 15px;
+  line-height: 1.2;
+  display: block;
+  height: 45px;
+  background: transparent;
+  color: #888a88;
+} */
+
+.focus-input-bank {
+  width: 100%;
+  font-weight: bold;
+}
+
+.focus-input-bank::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  transition: all 0.4s;
+}
+
+.focus-input-bank::after {
+  font-size: 15px;
+  color: #656363;
+  line-height: 1.2;
+  content: attr(data-placeholder);
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 16px;
+  left: 0px;
+  padding-left: 5px;
+  transition: all 0.4s;
+}
+
+.input-bank:after + .focus-input-bank::after {
+  top: -8px;
+}
+
+.input-bank:before + .focus-input-bank::before {
+  width: 100%;
+}
+
+.has-val.input-bank + .focus-input-bank::after {
+  top: -8px;
+}
+
+.has-val.input-bank + .focus-input-bank::before {
+  width: 100%;
+}
+
+.btn-danger{
+  background-color: #FF4D00;
+}

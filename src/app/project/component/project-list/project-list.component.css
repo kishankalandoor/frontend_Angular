@@ -1,0 +1,15 @@
+.table td{
+    white-space:normal;
+}
+.breadcrumb {
+  font-size: 20px;
+  padding-left: 0px;
+
+}
+
+.user-switch {
+  background-color: #FF4D00;
+  padding: 7px;
+  color: #fff;
+  float: right;
+}

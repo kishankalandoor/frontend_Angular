@@ -1,0 +1,64 @@
+.table td{
+    white-space:normal;
+}
+
+#freelancerflag{
+    margin-left: 20px;
+}
+
+@media screen and (min-width:676px) {
+    .outer-container {
+        width: 80% !important;
+        margin: auto !important;
+    }
+}
+.breadcrumb {
+  font-size: 20px;
+  padding-left: 0px;
+
+}
+label {
+  font-size: 1rem;
+}
+
+.date-mat-form-field{
+  border-bottom: 2px solid #FF4D00 !important;
+  font-size: 14px;
+ }
+
+::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  color: black !important;
+  /* text-align: center; */
+    font-size: 16px !important;
+    /* padding-top: 50px !important;  */
+    color: #808080 !important;
+    margin-bottom: 100px;
+    padding: 0px;
+    font-family: 'Roboto', sans-serif;
+
+ }
+
+
+ ::ng-deep .mat-form-field-wrapper{
+  margin: 0 !important;
+  padding: 0;
+}
+
+ ::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+ ::ng-deep .mat-form-field-ripple {
+  display: none;
+}
+
+
+ mat-datepicker-toggle {
+  color: #808080 !important;
+ }
+
+ ::ng-deep .mat-date-range-input-separator {
+  color: black;
+}
+

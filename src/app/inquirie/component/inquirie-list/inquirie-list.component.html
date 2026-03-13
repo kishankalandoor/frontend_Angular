@@ -1,0 +1,115 @@
+<div class="col-12 col-xl-12 pl-0 pr-0">
+    <div class="card">
+        <div class="card-body">
+            <div class="loading">
+            <div class="row">
+                <div class="col-10 col-md-10">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Inquiries</li>
+                            <li class="breadcrumb-item" aria-current="page">Inquiries List</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-2 col-md-2 d-flex justify-content-end" >
+                  <div class="mr-2">
+                    <a (click)="toDownload()"><i class="fas fa-file-export export-icon"></i></a>
+                    <p class="mb-0">Export</p>
+                  </div>
+                  <div>
+                    <button type="button" (click)="refreshPage()" class="btn btn-icons btn-rounded btn-outline-secondary" tooltip="Refresh"  placement="top" ><i class="fas fa-sync-alt" aria-hidden="true"></i></button>
+                    <p class="mb-0">Refresh</p>
+                  </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row justify-content-end">
+              <!-- <div class="form-group col-md-3 d-flex">
+                <i class="fa fa-search my-auto" aria-hidden="true"></i>
+                <input type="text" class="form-control" id="search"
+                  placeholder="Search By Name">
+              </div> -->
+              <label class=" pl-2 my-auto">Type:</label>
+              <div class="col-sm-auto">
+                <select class="form-control" (change)="getChangeStatus($event.target.value)" appBrowserCompatablity>
+                  <option value='All' selected>All</option>
+                  <option *ngFor="let item of dropDownItems" [value]='item.name'>{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th><i class="fa fa-user pr-2"></i>Name</th>
+                    <th><i class="fa fa-cog pr-2"></i>Type</th>
+                    <th><i class="fab fa-product-hunt pr-2"></i>Project Name</th>
+                    <th><i class="fas fa-file-invoice pr-2"></i>Subject</th>
+                    <th><i class="fas fa-info pr-2"></i>Description</th>
+                    <th><i class="fa fa-at pr-2"></i>Email ID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let inquiryList of page.content" >
+                    <td>{{inquiryList.firstName}}</td>
+                    <td>{{inquiryList.adminTicketMaster?.name}}</td>
+                    <td>{{inquiryList.projectName ? inquiryList.projectName : 'N/A'}}</td>
+                    <td>{{inquiryList.subject}}</td>
+                    <td>{{inquiryList.description}}</td>
+                    <td>{{inquiryList.email}}</td>
+                  </tr>
+                  <tr *ngIf="page.content?.length === 0">
+                    <td>-</td><td>-</td><td>-</td><td>No Records</td><td>-</td><td>-</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- <div *ngFor="let inquiryList of page.content">
+                <div class="row pl-3">
+                    <h5 class="display-5">{{inquiryList.subject}}</h5>
+                </div>
+
+                <div class="row pl-3 mt-2">
+                    <h6 class="display-6">{{inquiryList.projectName}}</h6>
+                </div>
+
+                <div class="row">
+                    <dl>
+                        <small class="description">{{inquiryList.description}}</small>
+                    </dl>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-xl-12">
+                        <dt >issue: </dt>
+                        <small class="description">{{inquiryList.adminTicketMaster?.name}}</small>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12 col-xl-5">
+                        <div class="row ml-0">
+                            <dt>Name: </dt>
+                            <dd class="ml-2">{{inquiryList.firstName}}</dd>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-6">
+                        <div class="row ml-0">
+                            <dt>Email: </dt>
+                            <dd class="ml-2">{{inquiryList.email}}</dd>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div> -->
+            <div>
+                <hr>
+                <ngx-loading [show]="loading"
+                [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}"
+                ></ngx-loading>
+            </div>
+            <app-pagination *ngIf="isInquiries" [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()" (pageSizeEvent)="getPageInNewSize($event)"></app-pagination>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="row">
+
+
+          <div class="col-12 col-xl-6 border-line" *ngIf="userDetail">
+              <dl class="row my-0 flex-column text-align-center">
+                  <div *ngIf="userDetail?.profilePicUrl !== null && userDetail?.profilePicUrl !== '' &&  userDetail?.profilePicUrl !== undefined">
+                      <img src="{{ userDetail?.profilePicUrl }}"  class="image-box rounded-circle mt-4">
+                  </div>
+                  <div *ngIf="userDetail?.profilePicUrl === null || userDetail?.profilePicUrl === undefined || userDetail?.profilePicUrl === '' ">
+                      <img src="assets/images/default_image.jpg"  class="image-box rounded-circle mt-4">
+                  </div>
+              </dl>
+
+
+
+
+          </div>
+
+          <div class="col-12 col-xl-6 mt-3">
+              <dl class="row my-0" *ngIf="userDetail?.user !== undefined && userDetail?.user !== null">
+                  <dt class="col-sm-5" *ngIf=" userDetail?.user?.firstName !== null"><i class="fa fa-user module-icons"></i>Name:</dt>
+                  <dd class="col-sm-7" *ngIf=" userDetail?.user?.firstName !== null">  {{ userDetail?.user?.firstName}}</dd>
+
+                  <dt class="col-sm-5" *ngIf=" userDetail?.user?.email !== null"><i class="fa fa-at module-icons"></i>Email ID: </dt>
+                  <dd class="col-sm-7" *ngIf=" userDetail?.user?.email !== null"> {{ userDetail?.user?.email }}</dd>
+
+                  <dt class="col-sm-5" *ngIf=" userDetail?.user?.phone !== null"><i class="fa fa-mobile-alt module-icons"></i>Phone Number:</dt>
+                  <dd class="col-sm-7" *ngIf=" userDetail?.user?.phone !== null">  {{ userDetail?.user?.phone }}</dd>
+
+              </dl>
+          </div>
+
+      </div>
+      <hr>
+
+
+
+
+

@@ -1,0 +1,35 @@
+<div class="row" *ngIf="page">
+    <div class="col-12 col-md-4">
+        <div class="row" >
+          <p class="mt-2" *ngIf="((page.pageable.pageNumber+1)*100)>page.totalElements; else notLast">{{(page.pageable.pageNumber*100)+1 }} - {{ (page.totalElements)}} of {{page.totalElements}}   items  | page</p>
+          <ng-template #notLast>
+          <p class="mt-2">{{(page.pageable.pageNumber*100)+1}} - {{ (page.pageable.pageNumber+1)*100}} of {{page.totalElements}}   items  | page</p>
+
+          </ng-template>
+
+          <p *ngIf="page.totalPages !== 0">
+            <input type="number" min="1" class="input-pagination" [(ngModel)]="customPageNumber">
+            <button type="button" tooltip="Find Page"  placement="top" class="btn btn btn-inverse-light page-find-button btn-sm" (click)="findPage(customPageNumber)"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </p>
+        </div>
+    </div>
+    <div class="col-12 col-md-8">
+        <ul class="pagination justify-content-end p2">
+          <li class="page-item pr-2"   tooltip="First"  placement="top"  [ngClass]="{'disabled': page.first }"><a (click)="firstPage(0)" class="page-link">&laquo;</a></li>
+          <li class="page-item" tooltip="previous"  placement="top"  [ngClass]="{'disabled': page.first }"><a (click)="previousPage()" class="page-link">&#8249;</a></li>
+
+        <!--  <a *ngFor="let in of counter(page.totalPages); let i = index"  [ngClass]="{'is-active': page.pageable.pageNumber +1 === i+1}">
+              <li (click)="updatePageSize(i)" >{{i+1}}</li>
+          </a> -->
+
+          <a class="is-active">
+            <li>{{page.pageable.pageNumber+1}}</li>
+          </a>
+
+          <li class="page-item"  tooltip="Next"  placement="top"  [ngClass]="{'disabled': page.last }"><a  (click)="nextPage()" class="page-link">&#8250;</a></li>
+          <li class="page-item pl-2"  tooltip="Last"  placement="top"  [ngClass]="{'disabled': page.last }"><a  (click)="lastPage(page.totalPages-1)" class="page-link">&raquo;</a></li>
+        </ul>
+    </div>
+
+
+  </div>

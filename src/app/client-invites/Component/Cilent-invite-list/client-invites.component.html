@@ -1,0 +1,115 @@
+<div class="col-lg-12 pl-0 pr-0">
+  <div class="card">
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-10 col-md-10">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item" routerLink="/main/user/user-list">Client Invites List</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-2 col-md-2 d-flex justify-content-end" >
+            <div class="mr-2" >
+              <a (click)="downloadCsv()"><i class="fas fa-file-export export-icon"></i></a>
+              <p class="mb-0">Export</p>
+            </div>
+              <div>
+                <!-- <button type="button" routerLink="/main/dashboard/landing-dashboard"  *ngIf="config.backButton" class="btn btn-icons btn-rounded btn-outline-success" tooltip="Back To Dashboard"  placement="top" > <i class="fas fa-arrow-circle-left"></i></button> -->
+                <button type="button" (click)="refreshPage()" class="btn btn-icons btn-rounded btn-outline-secondary" tooltip="Refresh"  placement="top" ><i class="fas fa-sync-alt" aria-hidden="true"></i></button>
+                <p class="mb-0">Refresh</p>
+              </div>
+            </div>
+        </div>
+        <hr>
+        <div  class="row justify-content-between align-items-center mt-4">
+            <div  class="form-group col-md-4 d-flex">
+              <i class="fa fa-search my-auto" aria-hidden="true"></i>
+              <!-- <input type="text" class="form-control"
+               placeholder="Search Project Name or User names..."> -->
+                <input type="text" class="form-control" [(ngModel)]= 'inputText' (ngModelChange)="this.filterUpdate.next($event)"
+            placeholder="Search Project Name or User names..." >
+            </div>
+
+              <!-- <div class="col-md-3 d-flex">
+                <label for="start-date" class="m-auto pr-3">From:</label>
+                <input type="date" id="start-date" class="form-control" [(ngModel)]='startDate' max="24-06-2000" (ngModelChange)='startDateFilter($event)' (click)="onStartDateClick()" #start >
+              </div>
+              <div class="col-md-3 d-flex">
+                <label for="end-date" class="m-auto pr-3">To:</label>
+                <input type="date" id="end-date" class="form-control" [(ngModel)]='endDate' (ngModelChange)='endDateFilter($event)'>
+              </div> -->
+
+              <div style="margin-right: auto; margin-top: -31px;" class="col-md-3">
+                <mat-form-field class="date-mat-form-field"  appearance="fill">
+                  <mat-label>Select a date range</mat-label>
+                  <mat-date-range-input  [rangePicker]="picker">
+                    <input matStartDate  [(ngModel)]='startDate' (ngModelChange)='startDateFilter($event)'  placeholder="From date" readonly>
+                    <input matEndDate  [(ngModel)]='endDate' (ngModelChange)='endDateFilter($event)' placeholder="To date" readonly>
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+
+              <!-- <div style="margin-right: auto; color: black;" class="col-md-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Enter a date range</mat-label>
+                  <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date">
+                    <input matEndDate formControlName="end" placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+
+                  <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                  <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+              </div> -->
+
+
+
+        </div>
+        <br>
+
+
+        <div class="loading">
+          <div style="overflow-x:auto;">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fas fa-file-invoice pr-2"></i>Client</th>
+                  <th><i class="fas fa-users-cog pr-2"></i>Service Provider</th>
+                  <th><i class="fab fa-product-hunt pr-2"></i>Service Type</th>
+                  <th><i class="far fa-star pr-2"></i>Project Name</th>
+                  <th><i class="fa fa-calendar pr-2"></i>Invited Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let clientInvitesList of page.content">
+                  <td>{{ clientInvitesList?.inviteFreelancer?.client?.firstName}}</td>
+                  <td *ngIf="!clientInvitesList?.freelancer?.agency">{{ clientInvitesList?.inviteFreelancer?.freelancer?.firstName }}</td>
+                  <td *ngIf="clientInvitesList?.freelancer?.agency">{{ clientInvitesList?.freelancer?.agencyName }}</td>
+                  <td *ngIf="!clientInvitesList?.freelancer?.agency">Freelancer</td>
+                  <td *ngIf="clientInvitesList?.freelancer?.agency">Company</td>
+                  <td>{{ clientInvitesList?.inviteFreelancer?.projectEntity?.projectTitle }}</td>
+                  <td>{{clientInvitesList?.inviteFreelancer?.inviteDate | date:'dd-MM-yyyy'}}</td>
+
+                </tr>
+                <tr *ngIf="page.content?.length === 0">
+                  <td>-</td><td>-</td><td>No Records</td><td>-</td><td>-</td>
+                </tr>
+              </tbody>
+            </table>
+            <ngx-loading [show]="loading"
+            [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}"
+            ></ngx-loading>
+          </div>
+          <hr>
+          <app-pagination *ngIf="isUsers" [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+            (pageSizeEvent)="getPageInNewSize($event)"></app-pagination>
+        </div>
+      </div>
+    </div>
+</div>

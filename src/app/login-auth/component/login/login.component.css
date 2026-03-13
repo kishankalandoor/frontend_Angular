@@ -1,0 +1,258 @@
+
+
+* {
+    margin: 0px; 
+    padding: 0px; 
+    box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+a:focus {
+  outline: none !important;
+}
+
+a:hover {
+  text-decoration: none;
+  color:#f64712;
+}
+
+input {
+    outline: none;
+    border: none;
+    font-size: 14px;
+}
+
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; }
+input:focus::-moz-placeholder { color:transparent; }
+input:focus:-ms-input-placeholder { color:transparent; }
+
+input::-webkit-input-placeholder {color: #999999;}
+input:-moz-placeholder {color: #999999;}
+input::-moz-placeholder {color: #999999;}
+input:-ms-input-placeholder {color: #999999;}
+
+label {
+  display: block;
+  margin: 0;
+}
+
+button {
+    outline: none !important;
+    border: none;
+    background: transparent;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.forgot-password {
+  font-size: 13px;
+  color: #f64712;
+  margin-left:352px;
+}
+
+
+
+.container-login {
+  width: 100%;  
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-image: url(../../../../assets/images/login-bg.jpg);
+  background-size: cover;
+  background-color: rgb(255 77 0 / 67%);
+  background-blend-mode: multiply;
+}
+
+
+.wrap-login {
+  width: 670px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.login-form-title {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 70px 15px 74px 15px;
+}
+
+.login-form-title-1 {
+  font-size: 30px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.login-form-title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(51,49,50,1);
+}
+
+.login-form {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 43px 88px 93px 120px;
+}
+
+.wrap-input{
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid #b2b2b2;
+  margin-top: 15px;
+}
+
+.input {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  color: #555555;
+  line-height: 1.2;
+  display: block;
+  width: 100%;
+  background: transparent;
+  padding: 0 30px;
+}
+
+input.input {
+  height: 45px;
+}
+
+.input:focus + .focus-input::before {
+  width: 100%;
+}
+
+.has-val.input + .focus-input::before {
+  width: 100%;
+}
+
+
+
+.login-form-btn {
+  justify-content: center;
+  padding: 10px;
+  min-width: 465px;
+  height: 50px;
+  background-color:#f64712;
+  border-radius: 7px;
+  line-height: 1.2;
+  box-shadow: 0 1px 16px -6px grey;
+}
+
+
+.m-b-18 {margin-bottom: 18px;}
+.m-b-25 {margin-bottom: 25px;}
+.m-b-26 {margin-bottom: 26px;}
+.p-b-30 {padding-bottom: 30px;}
+
+.error-message {
+  color: #cc0033;
+  display:inline-block;
+  font-size: 13px;
+  line-height: 15px;
+  margin: 0px 0 0;
+}
+
+.btn-icon-menu {
+  color: #999999;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  cursor: pointer;
+}
+
+.btn-show-pass {
+  font-size: 15px;
+  color: #999999;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding-right: 5px;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.btn-show-pass:hover {
+  color: #6a7dfe;
+}
+
+.btn-show-pass.active {
+  color: #6a7dfe;
+}
+
+
+@media (max-width: 576px) {
+    .login-form {
+      padding: 43px 15px 57px 117px;
+    }
+   
+    .forgot-password{
+        margin-left:220px;
+    }
+
+    .login-form-btn{
+      min-width: 345px;
+    }
+    
+    .btn-show-pass {
+      top: 10px;
+    }
+}
+  
+@media (max-width: 480px) {
+    .login-form {
+      padding: 43px 15px 57px 15px;
+    }
+  
+    .forgot-password{
+        margin-left:220px;
+    }
+
+    .login-form-btn{
+      min-width: 345px;
+    }
+
+    .btn-show-pass {
+      top: 10px;
+    }
+}
+  
+
+@media (max-width: 360px) {
+    .login-form-btn {
+        min-width:300px;
+    }
+    .forgot-password{
+        margin-left:190px;
+    }
+
+    .btn-show-pass {
+      top: 10px;
+    }
+}
+  
+

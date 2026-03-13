@@ -1,0 +1,74 @@
+
+        <div class="row">
+
+            <div class="col-12 col-xl-6 border-line" *ngIf="userDetail">
+                <dl class="row my-0 flex-column text-align-center">
+                    <div *ngIf="userDetail?.profilePicUrl !== null && userDetail?.profilePicUrl !== '' &&  userDetail?.profilePicUrl !== undefined">
+                        <img src="{{ userDetail?.profilePicUrl }}"  class="image-box rounded-circle mt-4">
+                    </div>
+                    <div *ngIf="userDetail?.profilePicUrl === null || userDetail?.profilePicUrl === undefined || userDetail?.profilePicUrl === '' ">
+                        <img src="assets/images/default_image.jpg"  class="image-box rounded-circle mt-4">
+                    </div>
+                </dl>
+
+                <dl class="text-align-center mb-0">
+                    <ng-template #t let-fill="fill">
+                        <span class="star" [class.full]="fill === 100">
+                          <span class="half" [style.width.%]="fill"><i class="fa fa-star"></i></span><i class="fa fa-star"></i>
+                        </span>
+                      </ng-template>
+                    <ngb-rating [(rate)]="currentRate" [starTemplate]="t"  [readonly]="true" [max]="5" [routerLink]="['/main/rating/individual-rating-detail', userDetail?.user.id, userDetail?.role]"></ngb-rating>
+                </dl>
+                <a *ngIf='currentRate>0' [routerLink]="['/main/rating/individual-rating-detail',userDetail?.user.id, userDetail?.role]" class="ml-3 d-flex justify-content-center">View Ratings</a>
+            </div>
+
+            <div class="col-12 col-xl-6 mt-3">
+                <dl class="row my-0" *ngIf="userDetail?.user !== undefined && userDetail?.user !== null">
+                    <dt class="col-sm-5" *ngIf=" userDetail?.user?.firstName !== null"><i class="fa fa-user module-icons"></i>Name:</dt>
+                    <dd class="col-sm-7" *ngIf=" userDetail?.user?.firstName !== null">  {{ userDetail?.user?.firstName}}</dd>
+
+                    <dt class="col-sm-5" *ngIf=" userDetail?.user?.email !== null"><i class="fa fa-at module-icons"></i>Email ID: </dt>
+                    <dd class="col-sm-7" *ngIf=" userDetail?.user?.email !== null"> {{ userDetail?.user?.email }}</dd>
+
+                    <dt class="col-sm-5" *ngIf=" userDetail?.user?.phone !== null"><i class="fa fa-mobile-alt module-icons"></i>Phone Number:</dt>
+                    <dd class="col-sm-7" *ngIf=" userDetail?.user?.phone !== null">  {{ userDetail?.user?.phone }}</dd>
+
+                    <dt class="col-sm-5" *ngIf="userDetail?.projectsCompleted !== null"><i class="fas fa-project-diagram module-icons"></i>Completed Projects: </dt>
+                    <dd class="col-sm-7" *ngIf="userDetail?.projectsCompleted !== null"> {{ userDetail?.projectsCompleted }}</dd>
+
+                    <dt class="col-sm-5" *ngIf="userDetail?.activeProjects !== null"><i class="fas fa-project-diagram module-icons"></i>Active Projects: </dt>
+                    <dd class="col-sm-7" *ngIf="userDetail?.activeProjects !== null"> {{ userDetail?.activeProjects }}</dd>
+
+                    <dt class="col-sm-5" *ngIf="userDetail?.projectsPosted !== undefined && userDetail?.projectsPosted !== null"><i class="fas fa-project-diagram module-icons"></i>Posted Projects: </dt>
+                    <dd class="col-sm-7" *ngIf="userDetail?.projectsPosted !== undefined && userDetail?.projectsPosted !== null"> {{ userDetail?.projectsPosted }} </dd>
+
+                    <dt class="col-sm-5" *ngIf=" userDetail?.paymentVerified !== undefined && userDetail?.paymentVerified !== null"><i class="fa fa-handshake module-icons"></i>Payment:</dt>
+                    <dd class="col-sm-7" *ngIf=" userDetail?.paymentVerified !== undefined && userDetail?.paymentVerified !== null && userDetail?.paymentVerified === false" style="color: rgb(235 57 57);">Not Verified</dd>
+                    <dd class="col-sm-7" *ngIf=" userDetail?.paymentVerified !== undefined && userDetail?.paymentVerified !== null && userDetail?.paymentVerified === true" style="color: rgba(110, 194, 114, 0.842);"> Verified <img height="18px"  src="assets/images/verified.png"></dd>
+
+
+                    <dt class="col-sm-5" *ngIf="userDetail?.totalMoneySpent !== null"><i class="fa fa-rupee-sign module-icons mx-auto"></i>Total Spent:</dt>
+                    <dd class="col-sm-7" *ngIf="userDetail?.totalMoneySpent !== null"> {{ userDetail?.totalMoneySpent | number}}</dd>
+                </dl>
+            </div>
+
+        </div>
+        <hr>
+
+        <!-- <div class="row">
+            <div class="col-12 col-xl-4">
+                <strong>Type of freelancer looking for:</strong>
+            </div>
+            <div class="col-12 col-xl-8">
+                    <h6>{{ userDetail?.clientPreferences }}</h6>
+            </div>
+        </div>
+        <div class="row mt-5" >
+            <div class="col-12 col-xl-12 ml-2" style="margin-top:-30px;">
+                <h5><strong>Breif description of choosing the platform:</strong></h5>
+                <div>
+                    <small *ngIf="userDetail?.description !== null && userDetail?.description != '' && userDetail?.description !=undefined" class="description">{{ userDetail?.description }}</small>
+                    <small *ngIf="userDetail?.description === null || userDetail?.description === '' || userDetail?.description ===undefined"class="description">No Description Provided.</small>
+                </div>
+            </div>
+        </div> -->

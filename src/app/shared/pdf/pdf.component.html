@@ -1,0 +1,77 @@
+<div>
+    <div class="pdf" id="htmlData" #htmlData>
+        <div class="_details pb-3">
+            <!-- <img src="assets/images/invoice.jpg" style="width: 80%;height:25px;"> -->
+            <div class="row">
+                <div style="margin-right: 40px;" class="col-5">
+                    <p id="_address"><b>PANGAEA X PORTAL L.L.C</b> <br> Green Community,<br> Office Building 3, Office
+                        336 V
+                        <br> Dubai Investment Park,<br> Dubai, U.A.E
+                    </p>
+                </div>
+                <div class="col-6">
+                    <div class="text-right" style="height: 330px;">
+                        <img id="_logo" src="assets/images/Pangaeax_V3_RGB.png" alt="logo.png"><br>
+                        <b class="addition-text">Connect. Communicate. Collaborate. </b>
+                    </div>
+                </div>
+            </div>
+
+            <h1 id="_invoice"><b>Invoice</b></h1>
+            <div class="row">
+                <div class="col">
+                    <p class="_billing" *ngIf="userFlag==1">
+                        <strong style="line-height: 2;">BILL TO:</strong><br> {{ invoiceObject.invoice.projectBidMap.freelancerDetails.agency ? invoiceObject.invoice.projectBidMap.freelancerDetails.agencyName : invoiceObject.invoice.projectBidMap.freelancerDetails.title }} <br>
+                    </p>
+                    <p class="_billing" *ngIf="userFlag==0">
+                        <strong style="line-height: 2;" >BILL TO:</strong><br> {{ invoiceObject.invoice.projectBidMap.projectEntity.clientDetails.user.firstName }} <br>
+                    </p>
+                    <!-- <p class="_billing" *ngIf="userFlag==2">
+                      <strong style="line-height: 2;" >BILL TO:</strong><br> {{ invoiceObject.invoice.projectBidMap.freelancerDetails.agencyName }} <br>
+                  </p> -->
+                </div>
+                <div class="col-md-6 _billing">
+                    <div class="row">
+                        <div class="col"><b>INVOICE NO</b><br></div>
+                        <div class="col">: {{ invoiceObject.invoice.invoiceId }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><b>DATE</b><br></div>
+                        <div class="col">: {{ invoiceObject.invoice.invoiceRaisedDate | date }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><b>PROJECT ID</b><br></div>
+                        <div class="col">: {{ invoiceObject.invoice.projectBidMap.projectEntity.projectId }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-auto" style="width: 95%;">
+            <table class="table _table _billingTable" style="margin-top:20px;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" colspan="5">ACTIVITY</th>
+                        <th scope="col-sm-2">RATE</th>
+                        <th scope="col" *ngIf="userFlag==0" class="text-center">TRANSACTION FEE</th>
+                        <th scope="col" *ngIf="userFlag==1" class="text-center">PX FEE</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="._tbody">
+                        <td colspan="5">{{ invoiceObject.invoice.projectBidMap?.projectEntity.projectTitle }}</td>
+                        <td>&#36;{{invoiceObject.invoice.invoiceAmount}}</td>
+                        <td *ngIf="userFlag==0">{{invoiceObject.clientCharges|currency:'USD'}}</td>
+                        <td *ngIf="userFlag==1">{{invoiceObject.freelancerCharges|currency:'USD'}}</td>
+                        <td *ngIf="userFlag==0">{{ invoiceObject.clientCharges + invoiceObject.invoice.invoiceAmount| currency:'USD'}}</td>
+                        <td *ngIf="userFlag==1"> {{ invoiceObject.invoice.invoiceAmount - invoiceObject.freelancerCharges | currency:'USD'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr style="letter-spacing:4px" />
+            <p class="text-right mr-3" *ngIf="userFlag==0"><b id="_total">TOTAL {{ invoiceObject.clientCharges + invoiceObject.invoice.invoiceAmount | currency:'USD' }}</b></p>
+            <p class="text-right mr-3" *ngIf="userFlag==1"><b id="_total">TOTAL {{ invoiceObject.invoice.invoiceAmount - invoiceObject.freelancerCharges | currency:'USD' }}</b></p>
+            <br><br>
+        </div>
+    </div>
+</div>

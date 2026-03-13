@@ -1,0 +1,234 @@
+<div class="loading">
+    <div class="row mb-0">
+        <div class="col-12 col-xl-12">
+            <div class="card card-border-light">
+                <div class="card-body py-4">
+
+                    <div class="row">
+                        <div class="col-8 col-md-8">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item" routerLink="/main/project/project-list">Projects</li>
+                                    <li class="breadcrumb-item" aria-current="page">Project Detail</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="col-4 col-md-4 d-flex justify-content-end">
+                            <button class="btn btn-icons btn-rounded btn-outline-success"
+                                routerLink="/main/project/project-list" tooltip="Back to ProjectList"> <i class="fas fa-arrow-circle-left"></i>
+                            </button>
+                        </div>
+                        <h4 class="display-5 pl-3"><b>{{ projectDetail?.projectEntity.projectTitle }}</b></h4>
+                    </div>
+
+                    <hr>
+                    <div class="" *ngIf="projectDetail?.projectEntity">
+                        <h5 class="light display-6">Description</h5>
+                        <dl class="pl-0">
+                            <small class="description">{{ projectDetail?.projectEntity?.projectDescription }}</small>
+                        </dl>
+                    </div>
+                    <div class="" *ngIf="projectDetail?.projectEntity">
+                        <h5 class="light display-6">Additional Information</h5>
+                        <dl class="pl-0">
+                            <small class="description" *ngIf='projectDetail?.projectEntity?.additionalInformation?.length'>{{ projectDetail?.projectEntity?.additionalInformation }}</small>
+                            <small class="description" *ngIf='!projectDetail?.projectEntity?.additionalInformation?.length'>No description provided</small>
+                        </dl>
+                    </div>
+                    <div class="" *ngIf="projectDetail?.projectEntity">
+                        <h5 class="light display-6">Skills</h5>
+                        <dl class="pl-0 mt-2 row skills">
+                            <small class="chip col-auto m-2" *ngFor="let skill of skills">{{ skill }}</small>
+                        </dl>
+                    </div>
+
+                    <div class="row" *ngIf="projectDetail">
+                        <div  class="col-12 col-lg-2 pl-2">
+                            <p class="proposal-click" (click)="toBidderListPage()"><i class="far fa-hdd  pr-1"></i><strong>Proposal Received</strong> </p>
+                            <p>{{ projectDetail?.projectEntity.totalNoOfBid }}</p>
+                        </div>
+                        <div class="col-12 col-sm-2">
+                            <p><i class="fa fa-dollar-sign  pr-1"></i><strong>Budget</strong></p>
+                            <p>
+                                <regular *ngIf="projectDetail?.projectEntity.actualBudget" class="currency"> {{ projectDetail?.projectEntity?.actualBudget | currency:'USD'}}</regular>
+                                <regular *ngIf="!projectDetail?.projectEntity.actualBudget" class="currency"> {{ projectDetail?.projectEntity?.expectedBudget | currency:'USD'}}</regular>
+
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-sm-3">
+                            <p><i class="far fa-calendar-alt  pr-1"></i><strong>Estimated TimeLine</strong></p>
+                            <p class="timeline">{{ projectDetail?.projectEntity.expectedTimeline }} Days</p>
+                        </div>
+
+                        <div class="col-12 col-sm-2">
+                            <p><i class="far fa-clock  pr-1"></i><strong>Posted</strong></p>
+                            <p>
+                                <regular>{{ projectDetail?.postedAt | date }}</regular>
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-sm-3">
+                            <p><i class="far fa-star  pr-1"></i><strong>Status</strong></p>
+                            <p>{{ projectDetail?.projectEntity.statusMaster?.statusName }}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-0">
+    <div class="col-12 col-xl-12" *ngIf="projectDocumentList">
+        <div class="card card-border-light" *ngIf="projectDocumentList?.length !== 0">
+            <div class="card-body py-4">
+                <div class="light row pl-3">
+                    <h4><i class="fa fa-paperclip  pr-2"></i>Attachments</h4>
+                </div>
+                <br>
+                <div class="row pl-1">
+                    <div class="line pl-2" *ngFor="let document of projectDocumentList">
+                        <a class="documenturl" href="{{ document.projectDocumentUrl }}"
+                            target="{{ document.projectDocumentType === 'pdf' ? '_blank' : '_self' }}">{{
+                            document.projectDocumentName }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-0">
+    <div class="col-12 col-xl-12">
+        <div class="card card-border-light">
+            <div class="card-body py-4">
+                <div class="row">
+                    <div class="col-12 col-xl-6 mt-3 pl-0 border-line">
+                        <h4 class="ml-3">
+                            <i class="far fa-user pr-2"></i> Client
+                        </h4>
+                        <hr>
+                        <div class="row" *ngIf="projectDetail?.projectEntity?.clientDetails !== null">
+                            <div class="col-xl-8">
+                                <dl class="row my-0">
+                                    <dt class="col-sm-4">Name:</dt>
+                                    <dd class="col-sm-8"> {{
+                                        projectDetail?.projectEntity.clientDetails?.user.firstName }} </dd>
+
+                                    <dt class="col-sm-4">Email ID: </dt>
+                                    <dd class="col-sm-8"> {{ projectDetail?.projectEntity.clientDetails?.user.email
+                                        }}</dd>
+
+                                    <dt class="col-sm-4">Phone: </dt>
+                                    <dd class="col-sm-8">{{ projectDetail?.projectEntity.clientDetails?.user.phone
+                                        }}</dd>
+
+                                    <dt class="col-sm-4">Client-Id: </dt>
+                                    <dd class="col-sm-8">{{ projectDetail?.projectEntity.clientDetails?.clientId }}
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="">
+                                    <div
+                                        *ngIf="projectDetail?.clientProfilePic !== null && projectDetail?.clientProfilePic !== '' && projectDetail?.clientProfilePic !== undefined">
+                                        <img src="{{ projectDetail?.clientProfilePic }}" class="img-lg rounded-circle">
+                                    </div>
+                                    <div
+                                        *ngIf="projectDetail?.clientProfilePic === null || projectDetail?.clientProfilePic === undefined || projectDetail?.freelancerProfilePic === '' ">
+                                        <img src="assets/images/default_image.jpg" class="img-lg rounded-circle">
+                                    </div>
+                                    <dl class="text-align-center" style="padding-top: 10px;margin-left:-20px ;">
+                                        <ng-template #t let-fill="fill">
+                                            <span class="star" style="padding-right: 5px;" [class.full]="fill === 100">
+                                                <span class="half" [style.width.%]="fill"><i
+                                                        class="fa fa-star"></i></span><i class="fa fa-star"></i>
+                                            </span>
+                                        </ng-template>
+                                        <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating><br>
+                                        <a *ngIf='currentRate>0' [routerLink]="['/main/rating/individual-rating-detail',projectDetail?.projectEntity.clientDetails?.user?.id, 'CLIENT']" class="ml-3">View Ratings</a>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12 col-xl-6 mt-3  pl-0">
+                        <h4 *ngIf="!projectDetail?.projectEntity?.freelancer?.agency" class="ml-3">
+                            <i class="far fa-user pr-2"></i>Freelancer
+                        </h4>
+                        <h4 *ngIf="projectDetail?.projectEntity?.freelancer?.agency" class="ml-3">
+                          <i class="far fa-user pr-2"></i>Company
+                      </h4>
+                        <hr>
+                        <div class="row" *ngIf="projectDetail?.projectEntity?.freelancer !== null">
+                            <div class="col-xl-9">
+                                <dl class="row my-0">
+
+                                    <dt class="col-sm-4">Name:</dt>
+                                    <dd *ngIf="!projectDetail?.projectEntity?.freelancer?.agency" class="col-sm-8">{{ projectDetail?.projectEntity?.freelancer?.user.firstName}}</dd>
+                                    <dd *ngIf="projectDetail?.projectEntity?.freelancer?.agency" class="col-sm-8">{{ projectDetail?.projectEntity?.freelancer?.agencyName}}</dd>
+
+
+
+                                    <dt class="col-sm-4">Email ID: </dt>
+                                    <dd class="col-sm-8">{{ projectDetail?.projectEntity.freelancer?.user.email }}
+                                    </dd>
+
+                                    <dt class="col-sm-4">Phone: </dt>
+                                    <dd class="col-sm-8">{{ projectDetail?.projectEntity.freelancer?.user.phone }}
+                                    </dd>
+
+                                    <dt class="col-sm-4">Bid Price: </dt>
+                                    <dd class="col-sm-8">{{ projectDetail?.bidPrice | currency:'USD' }}</dd>
+
+                                </dl>
+                            </div>
+                            <div class="col-xl-3 col-12">
+                                <div class="">
+                                    <div
+                                        *ngIf="projectDetail?.freelancerProfilePic !== null && projectDetail?.freelancerProfilePic !== '' && projectDetail?.freelancerProfilePic !== undefined">
+                                        <img src="{{ projectDetail?.freelancerProfilePic }}"
+                                            class="img-lg rounded-circle">
+                                    </div>
+                                    <div
+                                        *ngIf="projectDetail?.freelancerProfilePic === null || projectDetail?.freelancerProfilePic === undefined || projectDetail?.freelancerProfilePic === '' ">
+                                        <img src="assets/images/default_image.jpg" class="img-lg rounded-circle">
+                                    </div>
+                                    <dl class="text-align-center" style="padding-top: 10px;margin-left: -20px;">
+                                        <ng-template #f let-fill="fill">
+                                            <span class="star" style="padding-right: 5px;" [class.full]="fill === 100">
+                                                <span class="half" [style.width.%]="fill"><i
+                                                        class="fa fa-star"></i></span><i class="fa fa-star"></i>
+                                            </span>
+                                        </ng-template>
+                                        <ngb-rating [(rate)]="currentFreelancerRate" [starTemplate]="f"
+                                            [readonly]="true" [max]="5"></ngb-rating><br>
+                                        <a *ngIf="currentFreelancerRate>0"
+                                        [routerLink]="['/main/rating/individual-rating-detail',projectDetail?.projectEntity?.freelancer?.user?.id, 'FREELANCER']" class="ml-3">View Ratings</a>
+                                    </dl>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                  <div style="width: 100%; display: flex; justify-content: center; margin-top: 18px;">
+                    <button *ngIf="this.projectDetail.projectEntity.statusMaster.statusName === 'Under Dispute'" style="padding: 11px; border-radius: 6px;" type="button" class="btn btn-success" tooltip="Reslove Project" theme="primary" placement="top" (click)="closeProject(projectDetail?.projectEntity?.projectId )" >Resolve</button>
+                    <!-- <button *ngIf="projectDetail?.projectEntity?.statusMaster?.statusName === 'UnderDispute'" style="padding: 11px; border-radius: 6px;" type="button" class="btn btn-success" tooltip="Reslove Project" theme="primary" placement="top" (click)="closeProject(projectDetail?.projectEntity?.projectId )" >Resolve</button> -->
+
+                  </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}">
+</ngx-loading>
+</div>

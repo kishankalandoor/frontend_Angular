@@ -1,0 +1,67 @@
+
+<div class="col-12 col-lg-12 pl-0 pr-0">
+  <div class="card">
+      <div class="card-body">
+          <div class="row">
+            <div class="col-10 col-md-10">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">Tickets</li>
+                  <li class="breadcrumb-item" aria-current="page">Ticket List</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-2 col-md-2 d-flex justify-content-end">
+              <button type="button" (click)="refreshPage()" class="btn btn-icons btn-rounded btn-outline-secondary" tooltip="Refresh"  placement="top" ><i class="fas fa-sync-alt" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <hr>
+          <div class="row justify-content-between">
+              <div class="form-group col-md-4 d-flex">
+                <i class="fa fa-search my-auto" aria-hidden="true"></i>
+                <input type="text" class="form-control" [(ngModel)]= 'inputText' (ngModelChange)="this.filterUpdate.next($event)" placeholder="Search Project Name">
+              </div>
+              <div class="col-sm-7 d-flex">
+                <div class="col-sm-auto d-flex">
+                  <label for="start-date" class="my-auto mr-2">From:</label>
+                  <input type="date" id="start-date" class="form-control my-auto" [(ngModel)]='startDate' (ngModelChange)='startDateFilter($event)'>
+                </div>
+                <div class="col-sm-auto d-flex">
+                  <label for="end-date" class="my-auto mr-2">To:</label>
+                  <input type="date" id="end-date" class="form-control my-auto" [(ngModel)]='endDate' (ngModelChange)='endDateFilter($event)'>
+                </div>
+              </div>
+          </div>
+        <div class="loading">
+          <div style="overflow-x:auto;">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fa fa-clipboard-list pr-2"></i>Ticket Reference Number</th>
+                  <th><i class="fa fa-ticket-alt pr-2"></i>Subject</th>
+                  <th><i class="fab fa-product-hunt pr-2"></i>Project Name</th>
+                  <th><i class="fa fa-cog pr-2"></i>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ticketList of page.content">
+                  <td>{{ticketList?.ticketReferenceNumber}}</td>
+                  <td>{{ticketList?.subject }}</td>
+                  <td>{{ticketList.projectEntity?.projectTitle}}</td>
+                  <td><button [routerLink]="['/main/ticket/ticket-detail',ticketList?.id]" type="button" class="btn btn-rounded btn-inverse-outline-success" tooltip="View Ticket Detail" theme="primary" placement="top" ><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                </tr>
+                <tr *ngIf="page.content?.length === 0">
+                  <td>-</td><td>No Records</td><td>-</td><td>-</td>
+                </tr>
+              </tbody>
+            </table>
+            <ngx-loading [show]="loading"
+              [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}"
+            ></ngx-loading>
+          </div>
+          <hr>
+          <app-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()" (pageSizeEvent)="getPageInNewSize($event)"></app-pagination>
+        </div>
+      </div>
+  </div>
+</div>

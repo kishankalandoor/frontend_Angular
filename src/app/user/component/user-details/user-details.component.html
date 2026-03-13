@@ -1,0 +1,54 @@
+<div class="loading">
+  <div class="row mb-2">
+    <div class="col-12 col-xl-12">
+      <div class="card">
+        <div class="card-body py-4">
+          <div class="row">
+            <div class="col-8 col-md-8">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item" routerLink="/main/user/user-list">Users</li>
+                  <li class="breadcrumb-item" aria-current="page" >Users Details</li>
+                </ol>
+                <!-- <ol *ngIf="userDetail?.role =='AGENCY'" class="breadcrumb">
+                  <li class="breadcrumb-item" routerLink="/main/user/user-list">Users</li>
+                  <li class="breadcrumb-item" aria-current="page" >Users Details</li>
+                </ol> -->
+              </nav>
+            </div>
+            <div class="col-4 col-sm-4 d-flex justify-content-end">
+                <button class="btn btn-icons btn-rounded btn-outline-success" (click)="back()" tooltip="Back to UserList"> <i class="fas fa-arrow-circle-left"></i> </button>
+            </div>
+          </div>
+          <hr>
+
+          <div   class="row">
+            <div *ngIf="userDetail?.role; else noRole" class="col-md-12">
+              <h4 class="text-align-center">{{userDetail?.role}}</h4>
+              <!-- <h4 *ngIf="userDetail?.role =='AGENCY'" class="text-align-center">Company</h4> -->
+            </div>
+            <ng-template #noRole >
+              <div class="col-md-12"><h4 class="text-align-center">No role selected</h4></div>
+            </ng-template>
+          </div>
+
+          <!-- <div *ngIf="userDetail.isAgency"  class="row">
+            <div  class="col-md-12">
+              <h4 class="text-align-center">AGENCY</h4>
+            </div>
+          </div> -->
+
+
+          <app-admin *ngIf="userDetail && userDetail?.role === 'ADMIN'" [userDetail]="userDetail" [currentRate]="currentRate"></app-admin>
+          <app-freelancer *ngIf="userDetail && userDetail?.role === 'FREELANCER'"  [userDetail]="userDetail" [currentRate]="currentRate"></app-freelancer>
+          <app-agency *ngIf="userDetail && userDetail?.role =='COMPANY'"  [userDetail]="userDetail" [currentRate]="currentRate"></app-agency>
+          <app-customer *ngIf="userDetail && userDetail?.role === 'CLIENT'" [userDetail]="userDetail" [currentRate]="currentRate"></app-customer>
+          <app-no-role  ng *ngIf="!userDetail?.role"[userDetail]="userDetail" [currentRate]="currentRate"></app-no-role>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}">
+  </ngx-loading>
+</div>

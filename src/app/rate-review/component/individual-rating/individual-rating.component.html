@@ -1,0 +1,78 @@
+<h3 *ngIf='!page.content.length' class='d-flex justify-content-center mt-4'>Sorry no Ratings Avaliable</h3>
+<div class="row mb-0" *ngIf='page.content.length'>
+    <div class="col-12 col-xl-12">
+        <div class="card card-border-light">
+            <div class="card-body py-4">
+                <div class="loading">
+
+                    <div class="row">
+                        <div class="col-8 col-md-8">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item" routerLink="/main/rating/avg-rating-list">Rating and Review</li>
+                                    <li class="breadcrumb-item" aria-current="page"> Individual Rating Detail</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="col-4 col-sm-4 d-flex justify-content-end">
+                            <button class="btn btn-icons btn-rounded btn-outline-success"
+                                routerLink="/main/rating/avg-rating-list" tooltip="Back to AverageRating"> <i class="fas fa-arrow-circle-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row box" *ngFor="let individualRating of page.content">
+                        <div class="col-6 col-sm-6 mt-2">
+                            <p class="display-5"><strong>{{ individualRating?.review.project?.projectTitle }}</strong></p>
+                        </div>
+
+                        <div class="col-6 col-sm-6 d-flex justify-content-end mt-2">
+                            <div class="text-align-center starbackground">
+                                <ng-template #f let-fill="fill">
+                                    <span class="star" [class.full]="fill === 100">
+                                    <span class="half" [style.width.%]="fill"><i class="fa fa-star"></i></span><i class="fa fa-star"></i>
+                                    </span>
+                                </ng-template>
+                                <strong style="color: white;">{{individualRating?.review.rating}} </strong><ngb-rating rate="{{individualRating?.review.rating}}" [starTemplate]="f"  [readonly]="true" max="{{individualRating?.review.rating}}"></ngb-rating>
+                            </div>
+                            <button class="bg-white border-0 ml-2 px-2 mt-2" (click)='deleteUser(individualRating.review.id)' tooltip="delete the Review" style="height:35px"><i class="fa fa-trash-alt" aria-hidden="true" style="color: #FF4D00;"></i></button>
+                        </div>
+                        <div class="col-12 col-sm-1">
+                            <!-- <img class="img-md rounded-circle" src="assets/images/alan.png" alt="Paris"> -->
+                            <div *ngIf="individualRating?.profilePicUrl !== null && individualRating?.profilePicUrl !== '' && individualRating?.profilePicUrl !== undefined">
+                                <img src="{{individualRating?.profilePicUrl }}"  class="img-md rounded-circle">
+                            </div>
+                            <div *ngIf="individualRating?.profilePicUrl === null || individualRating?.profilePicUrl === undefined || individualRating?.profilePicUrl === '' ">
+                                <img src="assets/images/default_image.jpg"  class="img-md rounded-circle">
+                            </div>
+                        </div>
+                        <div *ngIf="individualRating?.freelancerDetails === null" class="col-12 col-sm-6 my-auto">
+                            <p class="mb-0"><strong>From</strong> : {{ individualRating?.review.reviewGivenBy?.firstName }}
+
+                            <br>
+                            <small>{{individualRating?.review.review}}</small>
+                        </div>
+                        <div *ngIf="individualRating?.freelancerDetails !== null && individualRating?.freelancerDetails?.agency" class="col-12 col-sm-6 my-auto">
+                          <p class="mb-0"><strong>From</strong> : {{ individualRating?.freelancerDetails?.agencyName }}
+
+                          <br>
+                          <small>{{individualRating?.review.review}}</small>
+                      </div>
+                      <div *ngIf="individualRating?.freelancerDetails !== null && !individualRating?.freelancerDetails?.agency" class="col-12 col-sm-6 my-auto">
+                        <p class="mb-0"><strong>From</strong> : {{ individualRating?.review.reviewGivenBy?.firstName }}
+
+                        <br>
+                        <small>{{individualRating?.review.review}}</small>
+                    </div>
+                    </div><br>
+
+                    <ngx-loading [show]="loading"
+                        [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}">
+                    </ngx-loading>
+                    <app-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+                    (pageSizeEvent)="getPageInNewSize($event)"></app-pagination>
+                </div>
+        </div>
+    </div>
+</div>

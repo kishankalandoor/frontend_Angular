@@ -1,0 +1,129 @@
+body {
+    margin: 0px;
+}
+
+@media screen and (max-width: 600px) {
+    #_logo {
+        max-width: 230px;
+        max-height: 200px;
+        top: 100px;
+    }
+    #_address {
+        font-size: 15px;
+    }
+    #_tagline {
+        position: relative;
+        font-size: 12px;
+        top: 80px;
+        left: 40px;
+        color: black;
+    }
+    #_invoice {
+        color: #ff4d00;
+        margin-top: 100px;
+    }
+    ._billing {
+        font-size: 15px;
+    }
+    td {
+        font-size: 16px;
+        text-align: right;
+    }
+    #_total {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 601px) {
+    #_address {
+        font-size: 20px;
+    }
+    #_tagline {
+        position: relative;
+        font-size: 15px;
+        top: 80px;
+        left: 40px;
+        color: black;
+    }
+    #_invoice {
+        color: #ff4d00;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    ._billing {
+        font-size: 20px;
+        color: black;
+    }
+    td {
+        font-size: 20px;
+        text-align: right;
+    }
+    td:first-child {
+        text-align: left;
+    }
+    #_total {
+        word-spacing: 50px;
+        font-size: 20px;
+    }
+}
+
+#_address {
+    position: relative;
+    top: 20px;;
+    line-height: 2;
+    color: black;
+}
+
+#_logo {
+    position: relative;
+    height: 280px;
+    justify-content: left;
+}
+
+#_topbar {
+    clip-path: polygon(0 0, 79% 0, 75% 9%, 0 9%);
+    background-color: #333333;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+._details {
+    border-bottom: #ff4d00 double 4px;
+    width: 95%;
+    margin: auto;
+}
+
+._table {
+    margin-top: 40px;
+    
+}
+
+thead,
+th {
+    border: 1px solid black !important;
+}
+
+hr {
+    border-top: dashed 1px #ff4d00 !important;
+}
+
+#_formula {
+    font-size: 12px;
+}
+
+#_link {
+    max-width: 100%;
+    font-size: 12px;
+    float: right;
+    color: black;
+}
+
+table td, table th {
+    white-space:normal;
+}
+.addition-text {
+    margin: auto;
+    width: 100%;
+    margin-right: 20px;
+}

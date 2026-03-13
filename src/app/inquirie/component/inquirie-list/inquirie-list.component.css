@@ -1,0 +1,12 @@
+.description{
+    text-align: justify;
+}
+.breadcrumb {
+  font-size: 20px;
+  padding-left: 0px;
+
+}
+.table td{
+  white-space:normal;
+  line-height: 2;
+}

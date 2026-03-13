@@ -1,0 +1,504 @@
+<div class="row">
+  <div class="col-12 col-xl-6 border-line" *ngIf="userDetail">
+    <dl class="row my-0 flex-column text-align-center">
+      <div
+        *ngIf="userDetail?.profilePicUrl !== null &&
+        userDetail?.profilePicUrl !== '' &&
+        userDetail?.profilePicUrl !== undefined">
+        <img
+          src="{{ userDetail?.profilePicUrl }}"
+          class="image-box rounded-circle mt-4"
+          />
+      </div>
+      <div
+        *ngIf="userDetail?.profilePicUrl === null ||
+        userDetail?.profilePicUrl === undefined ||
+        userDetail?.profilePicUrl === ''">
+        <img
+          src="assets/images/default_image.jpg"
+          class="image-box rounded-circle mt-4"
+          />
+      </div>
+    </dl>
+
+    <dl class="text-align-center mb-0">
+      <ng-template #t let-fill="fill">
+        <span class="star" [class.full]="fill === 100">
+          <span class="half" [style.width.%]="fill"><i class="fa fa-star"></i></span><i
+            class="fa fa-star"></i>
+        </span>
+      </ng-template>
+      <ngb-rating
+        [(rate)]="currentRate"
+        [starTemplate]="t"
+        [readonly]="true"
+        [max]="5"
+        [routerLink]="[
+        '/main/rating/individual-rating-detail',
+        userDetail?.user.id, 'FREELANCER']"></ngb-rating>
+    </dl>
+    <a *ngIf='currentRate>0' [routerLink]="['/main/rating/individual-rating-detail',userDetail?.user.id, 'FREELANCER']" class="ml-3 d-flex justify-content-center">View Ratings</a>
+  </div>
+
+  <div class="col-12 col-xl-6 mt-3">
+    <dl
+      class="row my-0"
+      *ngIf="userDetail?.agencyName !== undefined && userDetail?.agencyName !== null">
+      <dt class="col-sm-5" *ngIf="userDetail?.agencyName !== null">
+        <i class="fa fa-user module-icons"></i>Company Name:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.agencyName !== null">
+        {{ userDetail?.agencyName }}
+      </dd>
+
+      <dt class="col-sm-5" *ngIf="userDetail?.tagline !== null">
+        <i class="fas fa-hashtag module-icons"></i>Company Slogan:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.tagline !== null">
+        {{ userDetail?.tagline }}
+      </dd>
+
+      <dt class="col-sm-5" *ngIf="userDetail?.user?.email !== null">
+        <i class="fa fa-at module-icons"></i>Email ID:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.user?.email !== null">
+        {{ userDetail?.user?.email }}
+      </dd>
+
+
+      <dt class="col-sm-5" *ngIf="userDetail?.agencyWebsite !== null">
+        <i class="fas fa-globe module-icons"></i>Website:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.agencyWebsite !== null">
+        {{ userDetail?.agencyWebsite }}
+      </dd>
+       <dt class="col-sm-5" *ngIf="userDetail?.user?.phone !== null">
+        <i class="fa fa-mobile-alt module-icons"></i>Phone:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.user?.phone !== null">
+        {{ userDetail?.user?.phone }}
+      </dd>
+
+
+
+
+
+      <dt class="col-sm-5" *ngIf="userDetail?.projectsCompleted !== null">
+        <i class="fas fa-project-diagram module-icons"></i>Completed Projects:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.projectsCompleted !== null">
+        {{ userDetail?.projectsCompleted }}
+      </dd>
+
+      <dt class="col-sm-5" *ngIf="userDetail?.activeProjects !== null">
+        <i class="fas fa-project-diagram module-icons"></i>Active Projects:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.activeProjects !== null">
+        {{ userDetail?.activeProjects }}
+      </dd>
+
+      <dt
+        class="col-sm-5"
+        *ngIf="userDetail?.ratePerHour !== undefined &&
+        userDetail?.ratePerHour !== null">
+        <i class="fa fa-wallet module-icons"></i>Rate Per Hour:
+      </dt>
+      <dd
+        class="col-sm-7"
+        *ngIf="userDetail?.ratePerHour !== undefined &&
+        userDetail?.ratePerHour !== null">
+        {{ userDetail?.ratePerHour }}
+      </dd>
+
+      <dt class="col-sm-5" *ngIf="userDetail?.totalEarning !== null">
+        <i class="fa fa-rupee-sign module-icons"></i>Total Earned:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.totalEarning !== null">
+        {{ userDetail?.totalEarning | number }}
+      </dd>
+
+      <dt class="col-sm-5" *ngIf="userDetail?.projectsCompleted !== null">
+        <i class="fas fa-user-check module-icons"></i>Company Verification:
+      </dt>
+      <dd *ngIf="!isAgencyVerified" class="col-sm-1">
+        <div class="row">
+          <div  class="custom-control custom-switch" tooltip="Verify"  placement="top">
+            <input  type="checkbox" class="custom-control-input" id="verify"  (change)="onChange(userDetail?.freelancerId, $event.target.checked)" [checked]="isAgencyVerified">
+            <label class="custom-control-label" for="verify"></label>
+          </div>
+        </div>
+      </dd>
+
+      <dd *ngIf="isAgencyVerified" class="col-sm-1">
+        <div class="row">
+          <div  class="custom-control custom-switch" tooltip="Un-Verify"  placement="top">
+            <input  type="checkbox" class="custom-control-input" id="verify"  (change)="onChange(userDetail?.freelancerId, $event.target.checked)" [checked]="isAgencyVerified">
+            <label class="custom-control-label" for="verify"></label>
+          </div>
+        </div>
+      </dd>
+
+      <dd class="col-sm-6" *ngIf="!isAgencyVerified" style="color: rgb(235 57 57);">Not Verified</dd>
+      <dd class="col-sm-6" *ngIf="isAgencyVerified" style="color: rgba(110, 194, 114, 0.842);"> Verified <img height="18px"  src="assets/images/verified.png"></dd>
+
+      <dt class="col-sm-5" *ngIf="userDetail?.officeAddress !== null">
+        <i class="fas fa-address-card module-icons"></i>Address:
+      </dt>
+      <dd class="col-sm-7" *ngIf="userDetail?.officeAddress !== null">
+        {{ userDetail?.officeAddress }}
+      </dd>
+    </dl>
+  </div>
+</div>
+<hr/>
+
+<!-- <dt class="col-sm-5" *ngIf=" userDetail?.paymentVerified !== undefined && userDetail?.paymentVerified !== null"><i class="fa fa-handshake module-icons"></i>Payment:</dt>
+<dd class="col-sm-7" *ngIf=" userDetail?.paymentVerified !== undefined && userDetail?.paymentVerified !== null && userDetail?.paymentVerified === false" style="color: rgb(235 57 57);">Not Verified</dd>
+<dd class="col-sm-7" *ngIf=" userDetail?.paymentVerified !== undefined && userDetail?.paymentVerified !== null && userDetail?.paymentVerified === true" style="color: rgba(110, 194, 114, 0.842);"> Verified <img height="18px"  src="assets/images/verified.png"></dd> -->
+
+
+<div
+  class="row mt-2 pl-3"
+  *ngIf="userDetail && userDetail?.description !== null">
+  <div class="col-12 col-xl-12">
+    <h5><strong>Description:</strong></h5>
+    <p>
+      <small class="description">
+        {{ userDetail?.description }}
+      </small>
+    </p>
+  </div>
+</div>
+<!-- Tags -->
+
+<div
+  class="row mt-3 pl-3"
+  *ngIf="userDetail && userDetail?.specialisation?.length !== 0">
+  <div class="col-12 col-md-6">
+    <h5><strong>Industry:</strong></h5>
+    <div class="row my-0 pl-2">
+      <p class="skill-category" *ngFor="let category of userDetail?.expertise">
+        <small class="my-0">{{ category.categoryName }}</small>
+      </p>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <h5><strong>Skills:</strong></h5>
+    <div class="row my-0 pl-2">
+      <p
+        class="skill-category"
+        *ngFor="let subcategory of userDetail?.specialisation">
+        <small class="my-0">{{ subcategory?.categoryName }}</small>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<div
+  class="row mt-3 pl-3"
+  *ngIf="userDetail && userDetail?.tagsEntity?.length !== 0">
+  <div class="col-10 col-md-6">
+    <h5><strong>Tools:</strong></h5>
+    <div class="row my-0 pl-2">
+      <p class="skill-category"  class="skill-category"
+      *ngFor="let tools of userDetail?.tagsEntity">
+        <small class="my-0">{{ tools?.name }}</small>
+      </p>
+    </div>
+  </div>
+  <div class="col-10 col-md-6">
+    <h5><strong>Languages:</strong></h5>
+    <div class="row my-0 pl-2">
+      <p
+        class="skill-category"
+        *ngFor="let skill of userDetail?.skills">
+        <small class="my-0">{{ skill.tagValue }}</small>
+      </p>
+    </div>
+  </div>
+</div>
+<br>
+
+
+<!-- <div
+  class="row mt-3 pl-3"
+  *ngIf="isAwards">
+  <div class="col-12 col-md-12">
+    <h5><strong>Awards:</strong></h5>
+    <div class="row my-0 pl-2">
+      <p class="skill-category" *ngFor="let award of userDetail?.awardCertificates">
+        <small class="my-0">{{ award.awardCertificateIdName }}</small>
+      </p>
+    </div>
+  </div>
+</div>
+
+<br> -->
+<!-- file attachment -->
+<div
+  class="row mt-2 pl-3">
+  <div *ngIf="isagencyHourlyRateCard"  class="col-12 col-xl-12">
+    <h5><strong><img height="22" width="22" src="assets/images/attachment.svg"> Company Profile & References:</strong></h5>
+    <br>
+   <div class="row pl-3">
+
+        <button  class="attach-button " type="button"  ><a target="_blank" href={{userDetail?.agencyHourlyRateCardlink}}> {{agencyRateCard}}</a> </button>
+   </div>
+  </div>
+</div>
+<br>
+
+<div
+  class="row mt-2 pl-3">
+  <div *ngIf="isagencyDocuments" class="col-12 col-xl-12">
+    <h5><strong><img height="22" width="22" src="assets/images/attachment.svg"> Company Documents:</strong></h5>
+    <br>
+   <div class="row pl-3">
+      <div *ngFor="let agencyDocs of userDetail?.agencyDocuments" class="agency-docs">
+        <button  class="attach-button " type="button"  ><a target="_blank" href={{agencyDocs?.documentLink}}> {{agencyDocs?.documentName}} </a> </button>
+      </div>
+   </div>
+  </div>
+</div>
+<br>
+
+<div
+  class="row mt-2 pl-3">
+  <div *ngIf="isAwards" class="col-12 col-xl-12">
+    <h5><strong><img height="22" width="22" src="assets/images/attachment.svg"> Awards:</strong></h5>
+    <br>
+   <div class="row pl-3">
+      <div *ngFor="let awards of userDetail?.awardDocuments" class="agency-docs">
+        <button  class="attach-button " type="button"  ><a target="_blank" href={{awards?.documentLink}}> {{awards?.documentName}} </a> </button>
+      </div>
+   </div>
+  </div>
+</div>
+<br>
+
+<div
+  class="row mt-2">
+  <div *ngIf="userDetail?.sampleWorkDocument.length !==0" class="col-12 col-xl-12">
+    <h5><strong><img height="22" width="22" src="assets/images/attachment.svg"> Attachments:</strong></h5>
+    <br>
+   <div class="row attach-container">
+      <div *ngFor="let attachment of userDetail?.sampleWorkDocument" class=" col-12 col-md-6" style="margin-bottom: 50PX;">
+        <button  class="attach-button " type="button"  ><a target="_blank" href={{attachment?.freelancerSampleDocumentUrl}}> {{attachment?.freelancerSampleDocumentFileName}} </a> </button>
+        <p style="margin-top: 5px; color: #BEBEBE;">Description:</p>
+        <div class="attach-description">{{attachment?.freelancerSampleDocumentDescription}}</div>
+      </div>
+   </div>
+  </div>
+</div>
+
+
+
+<hr *ngIf="userDetail.beneficiaryName">
+<!-- Bank Details  -->
+<div class="row mt-4 ml-3" *ngIf="userDetail.beneficiaryName">
+  <button
+    class="btn btn-danger dropdown-toggle"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    (click)="toggle()"
+    tooltip="Bank Details">
+    {{ btnHidden }}
+  </button>
+  <div class="col-12 col-xl-12 bank-container-new" *ngIf="show">
+    <div class="row mt-4 data-row bank-row">
+      <div
+        class="wrap-input-bank col-5 col-sm-3  col-lg-3"
+        *ngIf="userDetail?.beneficiaryName !== null">
+        <h6
+          class="focus-input-bank"
+          >Beneficiary Name :</h6>
+      </div>
+
+      <div
+        class="wrap-input-bank col-7 col-sm-9 col-lg-9" style="margin-left: -25px;"
+        *ngIf="userDetail?.beneficiaryName !== null">
+        <!-- <input
+          class="input-bank has-val"
+          type="text"
+          value="{{ userDetail?.beneficiaryName }}"
+          readonly
+          /> -->
+          <p class="input-bank has-val">{{ userDetail?.beneficiaryName }}</p>
+      </div>
+    </div>
+
+     <div class="row data-row bank-row"  >
+        <div
+          class="wrap-input-bank col-5 col-sm-3 col-lg-3"
+          *ngIf="userDetail?.beneficiaryAddress !== null">
+          <!-- <span
+            class="focus-input-bank"
+            data-placeholder="Beneficiary Address :"></span> -->
+            <h6
+            class="focus-input-bank"
+           >Beneficiary Address :</h6>
+        </div>
+
+        <div
+          class="wrap-input-bank col-7 col-sm-9 col-lg-9" style="margin-left: -25px;"
+          *ngIf="userDetail?.beneficiaryAddress !== null">
+          <!-- <input style="word-wrap: break-word;"
+            class="input-bank has-val"
+            style="overflow-wrap:break-word"
+            type="text"
+            value="{{ userDetail?.beneficiaryAddress }}"
+            readonly
+            /> -->
+            <p style="width: 100%;" class="input-bank has-val">{{ userDetail?.beneficiaryAddress }}</p>
+        </div>
+     </div>
+
+
+     <div class="row data-row bank-row" >
+      <div
+      class="wrap-input-bank col-5 col-sm-3  col-lg-3"
+      *ngIf="userDetail?.bankName !== null">
+      <!-- <span class="focus-input-bank" data-placeholder="Bank Name :"></span> -->
+      <span class="focus-input-bank">Bank Name :</span>
+    </div>
+    <div
+      class="wrap-input-bank col-7 col-sm-9 col-lg-9" style="margin-left: -25px;"
+      *ngIf="userDetail?.bankName !== null">
+      <!-- <input
+        class="input-bank has-val"
+        type="text"
+        value="{{ userDetail?.bankName }}"
+        readonly
+        /> -->
+        <p  class="input-bank has-val">{{ userDetail?.bankName }}</p>
+    </div>
+   </div>
+
+
+
+
+  <div class="row data-row bank-row">
+
+    <div
+      class="wrap-input-bank col-5 col-sm-3  col-lg-3"
+      *ngIf="userDetail?.bankAddress !== null">
+      <!-- <span class="focus-input-bank" data-placeholder="Bank Address :"></span> -->
+      <h5 class="focus-input-bank">Bank Address :</h5>
+
+    </div>
+    <div
+      class="wrap-input-bank col-7 col-sm-9 col-lg-9" style="margin-left: -25px;"
+      *ngIf="userDetail?.bankAddress !== null">
+      <!-- <input
+        class="input-bank has-val"
+        type="text"
+        value="{{ userDetail?.bankAddress }}"
+        readonly
+        /> -->
+        <p class="input-bank has-val">{{ userDetail?.bankAddress }}</p>
+    </div>
+  </div>
+
+
+   <div class="row data-row bank-row" >
+      <div
+      class="wrap-input-bank col-5 col-sm-3  col-lg-3"
+      *ngIf="userDetail?.swiftCode !== null">
+      <!-- <span class="focus-input-bank" data-placeholder="SWIFT Code :"></span> -->
+      <h5 class="focus-input-bank">SWIFT Code :</h5>
+
+    </div>
+    <div
+      class="wrap-input-bank col-7 col-sm-9 col-lg-9" style="margin-left: -25px;"
+      *ngIf="userDetail?.swiftCode !== null">
+      <!-- <input
+        class="input-bank has-val"
+        type="text"
+        value="{{ userDetail?.swiftCode }}"
+        readonly
+        /> -->
+        <p class="input-bank has-val">{{ userDetail?.swiftCode }}</p>
+    </div>
+   </div>
+
+
+    <div class="row data-row bank-row">
+      <div
+        class="wrap-input-bank col-5 col-sm-3  col-lg-3"
+        *ngIf="userDetail?.accountNumber !== null">
+        <!-- <span
+          class="focus-input-bank"
+          data-placeholder="Account Number :"></span> -->
+          <h6
+          class="focus-input-bank">Account Number :</h6>
+      </div>
+      <div
+        class="wrap-input-bank col-7 col-sm-9 col-lg-9" style="margin-left: -25px;"
+        *ngIf="userDetail?.accountNumber !== null">
+        <!-- <input
+          class="input-bank has-val"
+          style="overflow-wrap:break-word"
+          type="text"
+          value="{{ userDetail?.accountNumber }}"
+          readonly
+          /> -->
+          <p  class="input-bank has-val">{{ userDetail?.accountNumber }}</p>
+      </div>
+    </div>
+
+      <div class="row data-row bank-row" >
+        <div
+          class="wrap-input-bank col-5 col-sm-3  col-lg-3"
+          *ngIf="userDetail?.accountIdentity !== null">
+          <!-- <span
+            class="focus-input-bank"
+            data-placeholder="Account Idenitity :"></span> -->
+            <h5
+            class="focus-input-bank"
+            >Account Idenitity :</h5>
+        </div>
+        <div
+          class="wrap-input-bank col-7 col-sm-9 col-lg-9 " style="margin-left: -25px;"
+          *ngIf="userDetail?.accountIdentity !== null">
+          <!-- <input
+            class="input-bank has-val"
+            type="text"
+            value="{{ userDetail?.accountIdentity }}"
+            readonly
+            /> -->
+            <p class="input-bank has-val">{{ userDetail?.accountIdentity }}</p>
+        </div>
+      </div>
+
+
+
+
+    <div class="row data-row bank-row" >
+      <div
+        class="wrap-input-bank col-5 col-sm-3  col-lg-3"
+        *ngIf="userDetail?.accountIdentityNumber !== null">
+        <!-- <span
+          class="focus-input-bank"
+          data-placeholder="Account Idenitity Number:"></span> -->
+          <h5
+          class="focus-input-bank"
+          >Account Idenitity Number :</h5>
+      </div>
+      <div
+        class="wrap-input-bank col-7 col-sm-9 col-lg-9" style="margin-left: -25px;"
+        *ngIf="userDetail?.accountIdentityNumber !== null">
+        <!-- <input
+          class="input-bank has-val"
+          type="text"
+          value="{{ userDetail?.accountIdentityNumber }}"
+          readonly
+          /> -->
+          <p  class="input-bank has-val">{{ userDetail?.accountIdentityNumber }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bank details end  -->

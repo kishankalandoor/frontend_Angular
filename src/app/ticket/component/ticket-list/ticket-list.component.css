@@ -1,0 +1,23 @@
+.btn-bg{
+    background-color: white;
+    border: black solid 1px;
+    border-radius: 2px;
+}
+.breadcrumb {
+  font-size: 20px;
+  padding-left: 0px;
+
+}
+.table td{
+    white-space:normal;
+}
+#start-date {
+  border: none;
+  border-bottom: 2px solid #FF4D00 !important;
+  font-size: 13px;
+}
+#end-date {
+  border: none;
+  border-bottom: 2px solid #FF4D00 !important;
+  font-size: 13px;
+}

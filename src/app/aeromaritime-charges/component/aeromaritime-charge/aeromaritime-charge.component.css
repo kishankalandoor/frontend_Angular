@@ -1,0 +1,53 @@
+.close{
+    color: #FF4D00 ;
+  }
+  .breadcrumb {
+    font-size: 20px;
+    padding-left: 0px;
+
+  }
+
+  .modal{
+  padding-top:13%;
+  }
+
+  .modal-body{
+  padding: 10%;
+  }
+
+  .form-control{
+  border: none !important;
+  border-bottom: 2px solid #FF4D00 !important;
+  font-size: 13px;
+  }
+  .modal-title {
+    font-weight: 700;
+  }
+
+  .modal-btn{
+  padding:2%;
+  }
+
+  .error-message {
+    color: #cc0033;
+    display:inline-block;
+    font-size: 13px;
+    line-height: 15px;
+    margin: 0px 0 0;
+  }
+
+  .custom-control-input:checked ~ .custom-control-label::before{
+    color: #fff;
+    border-color: #FF4D00;
+    background-color: #FF4D00;
+  }
+
+  .loading {
+    z-index: 0;
+    position: relative;
+    border-radius: 4px;
+}
+.titles {
+  font-weight: 700;
+  text-decoration: underline;
+}

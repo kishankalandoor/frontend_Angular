@@ -1,0 +1,168 @@
+<div class="col-12 col-lg-12 pl-0 pr-0" id='outer-view'>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-10 col-md-10">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">Invoice</li>
+              <li class="breadcrumb-item" aria-current="page">Invoice List</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-2 col-md-2 d-flex justify-content-end" >
+          <div class="mr-2" >
+            <a (click)="downloadCsv()"><i class="fas fa-file-export export-icon"></i></a>
+            <p class="mb-0">Export</p>
+          </div>
+          <div>
+            <button type="button" (click)="refreshPage()" class="btn btn-icons btn-rounded btn-outline-secondary" tooltip="Refresh"  placement="top" ><i class="fas fa-sync-alt" aria-hidden="true"></i></button>
+            <p class="mb-0">Refresh</p>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="form-group row">
+        <div style="margin-top: 19px;" class="form-group col-md-3 d-flex">
+          <i class="fa fa-search my-auto" aria-hidden="true"></i>
+          <input type="text" class="form-control" [(ngModel)]= 'inputText' (ngModelChange)="this.filterUpdate.next($event)"
+            placeholder="Search Project Name">
+        </div>
+
+        <label style="margin-top: 37px;" class=" col-sm-auto pl-2">Status:</label>
+        <div style="margin-top: 21px;" class="col-md-2">
+          <select class="form-control" (change)="getChangeStatus($event.target.value)" appBrowserCompatablity>
+            <option>All</option>
+            <option>Approved</option>
+            <option>Raised</option>
+            <option>Reject</option>
+          </select>
+        </div>
+        <!-- <div class="col-md-3 d-flex">
+          <label for="start-date" class="m-auto pr-3">From:</label>
+          <input type="date" id="start-date" class="form-control" [(ngModel)]='startDate' (ngModelChange)='startDateFilter($event)'>
+        </div>
+        <div class="col-md-3 d-flex">
+          <label for="end-date" class="m-auto pr-3">To:</label>
+          <input type="date" id="end-date" class="form-control" [(ngModel)]='endDate' (ngModelChange)='endDateFilter($event)'>
+        </div> -->
+
+        <div style=" color: black;" class="col-md-3">
+          <mat-form-field class="date-mat-form-field" appearance="fill">
+            <mat-label>Select a date range</mat-label>
+            <mat-date-range-input  [rangePicker]="picker">
+              <!-- <input matStartDate (keypress)="keyPressNumbers($event)" [(ngModel)]='startDate'  (ngModelChange)='startDateFilter($event)' placeholder="From date" readonly > -->
+              <input matStartDate [(ngModel)]='startDate'  (ngModelChange)='startDateFilter($event)' placeholder="From date" readonly >
+              <input matEndDate [(ngModel)]='endDate' (ngModelChange)='endDateFilter($event)' placeholder="To date" readonly>
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+      </div>
+      <div class="loading">
+        <div style="overflow-x:auto;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th><i class="fas fa-file-invoice pr-2"></i>Invoice Number</th>
+                <th><i class="fab fa-product-hunt pr-2"></i>Project Name</th>
+                <th><i class="far fa-star pr-2"></i>Status</th>
+                <th><i class="fa fa-cog pr-2"></i>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let invoiceList of page.content" >
+                <td>{{invoiceList.invoice.invoiceId}}</td>
+                <td>{{invoiceList.invoice.projectBidMap?.projectEntity?.projectTitle}}</td>
+                <td>{{invoiceList.invoice.statusMaster?.statusName}}</td>
+                <td><button type="button" class="btn btn-rounded btn-inverse-outline-success" tooltip="View Invoice"
+                    theme="primary" placement="top" (click)="downloadPDF(invoiceList, invoiceList?.invoice?.projectBidMap?.freelancerDetails?.agency)"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+              </tr>
+              <tr *ngIf="page.content?.length === 0">
+                <td>-</td><td>No Records</td><td>-</td><td>-</td>
+              </tr>
+            </tbody>
+          </table>
+          <ngx-loading [show]="loading"
+          [config]="{animationType: ngxLoadingAnimationTypes.circle, primaryColour: '#ffffff', secondaryColour: '#ccc', backdropBorderRadius: '3px'}"
+          ></ngx-loading>
+        </div>
+        <hr>
+        <app-pagination *ngIf="isInvoices" [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+          (pageSizeEvent)="getPageInNewSize($event)"></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class="modal" id="dropdownModal1" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog container" role="document" style="max-width:80%;">
+    <div class="modal-content p-3 outer-container">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="far fa-user pr-2"></i>Choose to invoice download</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div  class="modal-body">
+        <div class="row">
+          <div class="form-check">
+            <input type="radio" id="customerflag" [(ngModel)]="config.invoiceflag" name="invoicetotal"  [value]="0">
+            Client
+            <input type="radio" id="freelancerflag" [(ngModel)]="config.invoiceflag" name="invoicetotal" [value]="1">
+            {{isAgency ? 'Company' : 'Freelancer'}}
+            <br>
+        </div>
+
+        <!-- <div *ngIf="isAgency" class="form-check">
+          <input type="radio" id="customerflag" [(ngModel)]="config.invoiceflag" name="invoicetotal"  [value]="0">
+          Client
+          <input type="radio" id="freelancerflag" [(ngModel)]="config.invoiceflag" name="invoicetotal" [value]="2">
+          Company
+          <br>
+      </div> -->
+
+
+          </div>
+      </div>
+      <app-pdf *ngIf="invoiceObject!==undefined && invoiceObject!==null" [invoiceObject]="invoiceObject" [userFlag]="config.invoiceflag" [toDownload]='toDownload'></app-pdf>
+      <div class="modal-footer m-auto p-0 pt-2" style="width: 95%;">
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="close()">Cancel</button>
+        <button type="button" class="btn btn-success" id="save" (click)="getPdf(config.object,config.invoiceflag)">Download</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal" id="dropdownModal2" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog container" role="document" style="max-width:80%;">
+    <div class="modal-content p-3 outer-container">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="far fa-user pr-2"></i>Choose to invoice download</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div  class="modal-body">
+        <div class="row">
+          <div class="form-check">
+            <input type="radio" id="customerflag" [(ngModel)]="config.invoiceflag" name="invoicetotal1"  [value]="0">
+            Client
+            <input type="radio" id="freelancerflag" [(ngModel)]="config.invoiceflag" name="invoicetotal1" [value]="2">
+            Company
+            <br>
+        </div>
+
+          </div>
+      </div>
+      <app-pdf *ngIf="invoiceObject!==undefined && invoiceObject!==null" [invoiceObject]="invoiceObject" [userFlag]="config.invoiceflag" [toDownload]='toDownload'></app-pdf>
+      <div class="modal-footer m-auto p-0 pt-2" style="width: 95%;">
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="close()">Cancel</button>
+        <button type="button" class="btn btn-success" id="save" (click)="getPdfCompany(config.object,config.invoiceflag)">Download</button>
+      </div>
+    </div>
+  </div>
+</div> -->
